@@ -1,0 +1,130 @@
+{
+  "meta": {
+    "title": "RA9MANA DZ — Specialized digital solutions",
+    "description": "RA9MANA DZ builds specialized digital ecosystems for healthcare, education, restaurants and retail. One solution for every profession.",
+    "ogTitle": "RA9MANA DZ — Digital solutions designed for the real world",
+    "ogDescription": "Discover the RA9MANA ecosystem: digital products built for specific professions, not generic tools."
+  },
+  "skip": "Skip to content",
+  "nav": {
+    "solutions": "Solutions",
+    "produits": "Products",
+    "apropos": "Why RA9MANA",
+    "contact": "Contact",
+    "cta": "Discover our solutions",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu"
+  },
+  "hero": {
+    "eyebrow": "RA9MANA DZ — Digital ecosystem",
+    "title": "Digital solutions designed for the real world.",
+    "description": "RA9MANA DZ builds specialized digital tools that simplify the work of professionals, institutions and businesses.",
+    "ctaPrimary": "Discover our solutions",
+    "ctaSecondary": "Explore RA9MANA",
+    "stat1Value": "4",
+    "stat1Label": "sectors covered",
+    "stat2Value": "100%",
+    "stat2Label": "built for the field",
+    "stat3Value": "1",
+    "stat3Label": "ecosystem, dedicated solutions"
+  },
+  "logos": {
+    "label": "One ecosystem, many professions"
+  },
+  "ecosystem": {
+    "eyebrow": "The ecosystem",
+    "title": "One ecosystem. Specialized solutions.",
+    "description": "Every profession has its own constraints. RA9MANA builds solutions designed to answer the precise needs of each field.",
+    "categoryMedical": "Medical",
+    "categoryMedicalDesc": "Smart management for clinics and medical practices.",
+    "categoryEducation": "Education",
+    "categoryEducationDesc": "Digital solutions for schools and institutions.",
+    "categoryRestaurant": "Restaurants",
+    "categoryRestaurantDesc": "Simplified management for restaurants and daily operations.",
+    "categoryBusiness": "Business",
+    "categoryBusinessDesc": "Digital tools for shops and small businesses.",
+    "discover": "Discover"
+  },
+  "products": {
+    "eyebrow": "Products",
+    "title": "Every profession has its product.",
+    "description": "No generic tool: every RA9MANA application is built around one specific profession, with its own screens, its own language and its own priorities.",
+    "keyBenefit": "Key benefit",
+    "openApp": "Discover",
+    "comingSoonBadge": "Coming soon",
+    "comingSoonNotice": "This product is being finalized. Leave your email in the contact section to be notified at launch."
+  },
+  "why": {
+    "eyebrow": "Why RA9MANA",
+    "title": "Specialization over generalization.",
+    "description": "We don't build a tool for \"everyone\". We build a tool for you.",
+    "pillar1Title": "Specialized",
+    "pillar1Desc": "Every solution is designed around one specific profession and its real constraints.",
+    "pillar2Title": "Simple",
+    "pillar2Desc": "Technology should simplify work, not complicate it.",
+    "pillar3Title": "Accessible",
+    "pillar3Desc": "Modern tools designed to be genuinely usable, every day.",
+    "pillar4Title": "Evolving",
+    "pillar4Desc": "The ecosystem keeps evolving alongside users' needs."
+  },
+  "how": {
+    "eyebrow": "How it works",
+    "title": "From discovery to daily use, in four steps.",
+    "step1Num": "01",
+    "step1Title": "Discover",
+    "step1Desc": "Explore the solution designed for your activity.",
+    "step2Num": "02",
+    "step2Title": "Choose",
+    "step2Desc": "Select the product that matches your needs.",
+    "step3Num": "03",
+    "step3Title": "Launch",
+    "step3Desc": "Access the specialized platform, on its own dedicated space.",
+    "step4Num": "04",
+    "step4Title": "Work smarter",
+    "step4Desc": "Use technology designed around your workflow."
+  },
+  "philosophy": {
+    "quoteLine1": "Technology is not the destination.",
+    "quoteLine2": "It should simply make work better.",
+    "attribution": "The RA9MANA philosophy"
+  },
+  "future": {
+    "eyebrow": "What's next",
+    "title": "More solutions are coming.",
+    "description": "The RA9MANA ecosystem keeps expanding into new industries, with the same commitment to specialization.",
+    "badge": "Coming soon",
+    "item1": "Hospitality",
+    "item2": "Logistics & delivery",
+    "item3": "Beauty & wellness",
+    "item4": "Real estate"
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Let's talk about your business.",
+    "description": "A question, a project, or you'd like to be notified when a product launches? Write to us.",
+    "emailLabel": "Email",
+    "formName": "Name",
+    "formNamePlaceholder": "Your name",
+    "formEmail": "Email",
+    "formEmailPlaceholder": "you@example.com",
+    "formSector": "Sector",
+    "formSectorPlaceholder": "Medical, education, restaurant…",
+    "formMessage": "Message",
+    "formMessagePlaceholder": "Describe what you need in a few lines",
+    "formSubmit": "Send by email",
+    "formNote": "This form opens your email client — no data is stored on this website."
+  },
+  "footer": {
+    "tagline": "Digital solutions for real-world needs.",
+    "colSolutions": "Solutions",
+    "colProduct": "Products",
+    "colCompany": "About",
+    "colLang": "Languages",
+    "linkAbout": "Why RA9MANA",
+    "linkContact": "Contact",
+    "rights": "All rights reserved."
+  },
+  "toast": {
+    "comingSoon": "This product is coming soon to RA9MANA."
+  }
+}

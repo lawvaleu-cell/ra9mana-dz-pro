@@ -352,13 +352,13 @@ const RA9MANA_LOCALES = {
         "privacyNote": "Toutes les informations du contributeur sont optionnelles. Si vous ne choisissez pas de les afficher, elles n'apparaîtront pas sur la page publique de la référence."
       },
       "submitBtn": "Envoyer la référence",
-      "packageInstructions": "Le site étant statique (sans serveur), votre référence ne peut pas être publiée automatiquement. Téléchargez le pack ci-dessus puis envoyez-le par e-mail à l'équipe RA9MANA pour qu'elle soit ajoutée à la bibliothèque.",
+      "packageInstructions": "En cliquant sur « Préparer ma contribution », une page GitHub pré-remplie s'ouvre dans un nouvel onglet pour finaliser l'envoi (aucune donnée n'est envoyée à un autre serveur).",
       "mailButton": "Envoyer par e-mail",
       "zipReadme": "Envoyez ce dossier à contact@ra9mana.dz afin que la référence soit vérifiée puis ajoutée à la bibliothèque.",
       "success": {
-        "title": "Votre référence a été préparée avec succès",
-        "desc": "Téléchargez le pack ci-dessous et envoyez-le-nous pour finaliser votre contribution.",
-        "toast": "Pack de contribution prêt."
+        "title": "Votre contribution est prête",
+        "desc": "Une page GitHub pré-remplie avec vos informations vient de s'ouvrir dans un nouvel onglet. Joignez-y votre fichier PDF (et votre couverture, si vous en avez une) par glisser-déposer, puis cliquez sur « Submit new issue » pour finaliser l'envoi. Votre référence sera examinée avant publication dans la bibliothèque.",
+        "toast": "Redirection vers GitHub…"
       },
       "errors": {
         "required": "Ce champ est obligatoire.",
@@ -366,12 +366,21 @@ const RA9MANA_LOCALES = {
         "invalidType": "Format de fichier non pris en charge.",
         "fileTooLarge": "Le fichier dépasse la taille autorisée.",
         "packageFailed": "Une erreur est survenue lors de la préparation du fichier.",
-        "fixErrors": "Merci de corriger les champs signalés avant l'envoi."
+        "fixErrors": "Merci de corriger les champs signalés avant l'envoi.",
+        "submitFailed": "Impossible d'envoyer la référence. Veuillez réessayer."
       },
       "description": "Partagez vos recherches, mémoires et documents juridiques pour enrichir le fonds de connaissances de la bibliothèque. Remplissez le formulaire ci-dessous — tous les champs liés à votre identité sont entièrement optionnels.",
       "sectionBasic": "Informations de base",
       "downloadPackageBtn": "Télécharger le pack de la référence",
-      "packageInstructionsTitle": "Étape suivante"
+      "packageInstructionsTitle": "Étape suivante",
+      "githubButton": "Ouvrir la page GitHub",
+      "github": {
+        "attachPdfNote": "⚠️ Joignez ici le fichier : {filename}",
+        "attachCoverNote": "⚠️ Joignez ici l'image de couverture : {filename}",
+        "attachPhotoNote": "⚠️ Joignez ici votre photo : {filename}",
+        "noFile": "",
+        "popupBlocked": "Il semble que votre navigateur ait bloqué l'ouverture de la fenêtre — cliquez sur « Ouvrir la page GitHub » ci-dessous pour finaliser l'envoi."
+      }
     },
     "admin": {
       "meta": {
@@ -792,13 +801,13 @@ const RA9MANA_LOCALES = {
         "privacyNote": "All contributor information is optional. If you don't choose to show it, it won't appear on the reference's public page."
       },
       "submitBtn": "Submit reference",
-      "packageInstructions": "Since the site is static (no server), your reference can't be published automatically. Download the package above, then send it by email to the RA9MANA team so it can be added to the library.",
+      "packageInstructions": "Clicking “Submit reference” opens a pre-filled GitHub page in a new tab to finish the submission (no data is sent to any other server).",
       "mailButton": "Send by email",
       "zipReadme": "Send this package to contact@ra9mana.dz so the reference can be reviewed and added to the library.",
       "success": {
-        "title": "Your reference has been prepared successfully",
-        "desc": "Download the package below and send it to us to complete your contribution.",
-        "toast": "Contribution package ready."
+        "title": "Your contribution is ready",
+        "desc": "A GitHub page pre-filled with your information just opened in a new tab. Drag in your PDF file (and your cover image, if any), then click “Submit new issue” to finish sending it. Your reference will be reviewed before it's published in the library.",
+        "toast": "Redirecting to GitHub…"
       },
       "errors": {
         "required": "This field is required.",
@@ -806,12 +815,21 @@ const RA9MANA_LOCALES = {
         "invalidType": "Unsupported file format.",
         "fileTooLarge": "The file exceeds the allowed size.",
         "packageFailed": "Something went wrong while preparing the file.",
-        "fixErrors": "Please fix the highlighted fields before submitting."
+        "fixErrors": "Please fix the highlighted fields before submitting.",
+        "submitFailed": "The reference could not be submitted. Please try again."
       },
       "description": "Share your research, theses and legal documents to enrich the library's knowledge base. Fill in the form below — every field about your identity is entirely optional.",
       "sectionBasic": "Basic information",
       "downloadPackageBtn": "Download reference package",
-      "packageInstructionsTitle": "Next step"
+      "packageInstructionsTitle": "Next step",
+      "githubButton": "Open the GitHub page",
+      "github": {
+        "attachPdfNote": "⚠️ Attach the file here: {filename}",
+        "attachCoverNote": "⚠️ Attach the cover image here: {filename}",
+        "attachPhotoNote": "⚠️ Attach your photo here: {filename}",
+        "noFile": "",
+        "popupBlocked": "Your browser seems to have blocked the pop-up — click “Open the GitHub page” below to finish submitting."
+      }
     },
     "admin": {
       "meta": {
@@ -1232,13 +1250,13 @@ const RA9MANA_LOCALES = {
         "privacyNote": "جميع معلومات المساهم اختيارية. إن لم تختر عرضها، فلن تظهر في الصفحة العامة للمرجع."
       },
       "submitBtn": "إرسال المرجع",
-      "packageInstructions": "بما أن الموقع ثابت (Static) ولا يحتوي على خادم، لا يمكن نشر مرجعك تلقائيًا. نزّل الحزمة أعلاه ثم أرسلها عبر البريد الإلكتروني إلى فريق RA9MANA ليتم إضافتها إلى المكتبة.",
+      "packageInstructions": "عند الضغط على «إرسال المرجع»، تُفتح صفحة GitHub مُعبّأة مسبقًا في نافذة جديدة لإتمام الإرسال (لا تُرسَل أي بيانات إلى أي خادم آخر).",
       "mailButton": "إرسال عبر البريد الإلكتروني",
       "zipReadme": "أرسل هذه الحزمة إلى contact@ra9mana.dz حتى تتم مراجعة المرجع وإضافته إلى المكتبة.",
       "success": {
-        "title": "تم إعداد مرجعك بنجاح",
-        "desc": "نزّل الحزمة أدناه وأرسلها إلينا لإتمام المساهمة.",
-        "toast": "حزمة المساهمة جاهزة."
+        "title": "مساهمتك جاهزة",
+        "desc": "فُتحت صفحة GitHub مُعبّأة ببياناتك في نافذة جديدة. أرفق فيها ملف PDF (وصورة الغلاف إن وجدت) بالسحب والإفلات، ثم اضغط «Submit new issue» لإتمام الإرسال. سيتم مراجعة مرجعك قبل نشره في المكتبة.",
+        "toast": "جارٍ التحويل إلى GitHub…"
       },
       "errors": {
         "required": "هذا الحقل إلزامي.",
@@ -1246,12 +1264,21 @@ const RA9MANA_LOCALES = {
         "invalidType": "صيغة الملف غير مدعومة.",
         "fileTooLarge": "حجم الملف أكبر من المسموح.",
         "packageFailed": "حدث خطأ أثناء تجهيز الملف.",
-        "fixErrors": "يرجى تصحيح الحقول المظللة قبل الإرسال."
+        "fixErrors": "يرجى تصحيح الحقول المظللة قبل الإرسال.",
+        "submitFailed": "تعذر إرسال المرجع. يرجى المحاولة مرة أخرى."
       },
       "description": "يمكنك مشاركة أبحاثك ومراجعك ووثائقك القانونية لإثراء الرصيد المعرفي للمكتبة. عبّئ النموذج أدناه — جميع الحقول المتعلقة بهويتك اختيارية بالكامل.",
       "sectionBasic": "المعلومات الأساسية",
       "downloadPackageBtn": "تنزيل حزمة المرجع",
-      "packageInstructionsTitle": "الخطوة التالية"
+      "packageInstructionsTitle": "الخطوة التالية",
+      "githubButton": "فتح صفحة GitHub",
+      "github": {
+        "attachPdfNote": "⚠️ أرفق هنا الملف: {filename}",
+        "attachCoverNote": "⚠️ أرفق هنا صورة الغلاف: {filename}",
+        "attachPhotoNote": "⚠️ أرفق هنا صورتك الشخصية: {filename}",
+        "noFile": "",
+        "popupBlocked": "يبدو أن المتصفح منع فتح النافذة — اضغط على زر «فتح صفحة GitHub» أدناه لإتمام الإرسال."
+      }
     },
     "admin": {
       "meta": {

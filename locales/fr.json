@@ -351,13 +351,13 @@
       "privacyNote": "Toutes les informations du contributeur sont optionnelles. Si vous ne choisissez pas de les afficher, elles n'apparaîtront pas sur la page publique de la référence."
     },
     "submitBtn": "Envoyer la référence",
-    "packageInstructions": "Le site étant statique (sans serveur), votre référence ne peut pas être publiée automatiquement. Téléchargez le pack ci-dessus puis envoyez-le par e-mail à l'équipe RA9MANA pour qu'elle soit ajoutée à la bibliothèque.",
+    "packageInstructions": "En cliquant sur « Préparer ma contribution », une page GitHub pré-remplie s'ouvre dans un nouvel onglet pour finaliser l'envoi (aucune donnée n'est envoyée à un autre serveur).",
     "mailButton": "Envoyer par e-mail",
     "zipReadme": "Envoyez ce dossier à contact@ra9mana.dz afin que la référence soit vérifiée puis ajoutée à la bibliothèque.",
     "success": {
-      "title": "Votre référence a été préparée avec succès",
-      "desc": "Téléchargez le pack ci-dessous et envoyez-le-nous pour finaliser votre contribution.",
-      "toast": "Pack de contribution prêt."
+      "title": "Votre contribution est prête",
+      "desc": "Une page GitHub pré-remplie avec vos informations vient de s'ouvrir dans un nouvel onglet. Joignez-y votre fichier PDF (et votre couverture, si vous en avez une) par glisser-déposer, puis cliquez sur « Submit new issue » pour finaliser l'envoi. Votre référence sera examinée avant publication dans la bibliothèque.",
+      "toast": "Redirection vers GitHub…"
     },
     "errors": {
       "required": "Ce champ est obligatoire.",
@@ -365,12 +365,21 @@
       "invalidType": "Format de fichier non pris en charge.",
       "fileTooLarge": "Le fichier dépasse la taille autorisée.",
       "packageFailed": "Une erreur est survenue lors de la préparation du fichier.",
-      "fixErrors": "Merci de corriger les champs signalés avant l'envoi."
+      "fixErrors": "Merci de corriger les champs signalés avant l'envoi.",
+      "submitFailed": "Impossible d'envoyer la référence. Veuillez réessayer."
     },
     "description": "Partagez vos recherches, mémoires et documents juridiques pour enrichir le fonds de connaissances de la bibliothèque. Remplissez le formulaire ci-dessous — tous les champs liés à votre identité sont entièrement optionnels.",
     "sectionBasic": "Informations de base",
     "downloadPackageBtn": "Télécharger le pack de la référence",
-    "packageInstructionsTitle": "Étape suivante"
+    "packageInstructionsTitle": "Étape suivante",
+    "githubButton": "Ouvrir la page GitHub",
+    "github": {
+      "attachPdfNote": "⚠️ Joignez ici le fichier : {filename}",
+      "attachCoverNote": "⚠️ Joignez ici l'image de couverture : {filename}",
+      "attachPhotoNote": "⚠️ Joignez ici votre photo : {filename}",
+      "noFile": "",
+      "popupBlocked": "Il semble que votre navigateur ait bloqué l'ouverture de la fenêtre — cliquez sur « Ouvrir la page GitHub » ci-dessous pour finaliser l'envoi."
+    }
   },
   "admin": {
     "meta": {

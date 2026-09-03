@@ -122,12 +122,16 @@ le même moteur i18n que le reste du site — 100% statique, sans backend.
 
 ```
 library.html            Page publique : recherche, filtres, tri, fiches
-submit.html              Formulaire public de contribution (génère un .zip)
+submit.html              Formulaire public de contribution (envoie vers GitHub Issues)
 admin.html                Admin local (navigateur uniquement) pour préparer
                            les données/fichiers avant de les pousser sur GitHub
 data/library.json         Source de données de la bibliothèque (une entrée = un objet)
 books/                    Fichiers PDF des références (nom = id de la référence)
 covers/                   Images de couverture + photos de contributeurs
+.github/
+  ISSUE_TEMPLATE/library-submission.yml   Formulaire GitHub Issue rempli par submit.html
+  workflows/process-library-submission.yml  Action qui traite chaque soumission
+  scripts/process-submission.js             Parseur + met à jour data/library.json
 js/
   library-types.js        Liste centrale des 28 types de référence (extensible)
   library-common.js       Chargement des données, recherche/filtre, validation
@@ -158,10 +162,39 @@ dans `js/library-types.js`, puis la clé de traduction `libraryTypes.<id>`
 correspondante dans les 3 fichiers `locales/*.json` (et `js/locales.js`). Le
 filtre, les badges et le formulaire la prennent en compte automatiquement.
 
-**Contribution publique** : `submit.html` permet à un visiteur de préparer
-sa contribution (les mêmes champs qu'`admin.html`, sans le choix du statut)
-et de télécharger un `.zip` prêt à envoyer par e-mail à l'équipe RA9MANA pour
-vérification et intégration.
+**Contribution publique (`submit.html`)** : un visiteur remplit le même
+formulaire qu'`admin.html` (mêmes champs, mêmes types, même validation, même
+upload PDF/couverture — rien n'a changé côté interface). Au clic sur
+« Préparer ma contribution » :
+
+1. Le site **n'appelle aucune API et n'envoie aucun token** — il construit
+   simplement une URL `github.com/OWNER/REPO/issues/new` pré-remplie et
+   l'ouvre dans un nouvel onglet.
+2. Le visiteur y **glisse-dépose** son PDF (et sa couverture le cas
+   échéant) — c'est GitHub qui héberge le fichier — puis clique
+   **« Submit new issue »**.
+3. Le workflow `.github/workflows/process-library-submission.yml` se
+   déclenche automatiquement, lit l'issue via `.github/scripts/process-submission.js`,
+   construit une entrée conforme au schéma existant, l'ajoute à
+   `data/library.json` **sans toucher aux entrées déjà présentes**, avec
+   `"status": "pending"`, puis commit et push le résultat avec le
+   `GITHUB_TOKEN` fourni automatiquement par GitHub Actions (aucun secret à
+   créer ou à stocker). Un commentaire confirme le résultat sur l'issue.
+4. Comme pour l'admin local, la référence n'apparaît publiquement qu'après
+   passage de son `status` à `"published"` (à faire manuellement dans
+   `data/library.json`, ou plus tard via une extension de l'admin local).
+
+**Configuration requise (une seule fois)** :
+
+- Dans `js/submit.js`, remplacez `const GITHUB_REPO = "OWNER/REPO";` par le
+  vrai dépôt, ex. `"ra9mana-dz/ra9mana-dz"`. Ce n'est pas un secret — juste
+  l'adresse publique du dépôt.
+- Dans les paramètres du dépôt GitHub : **Settings → Actions → General →
+  Workflow permissions**, cochez **"Read and write permissions"** (nécessaire
+  pour que l'Action puisse commit `data/library.json`).
+
+Aucun Personal Access Token, aucune clé API n'est jamais présent dans le
+frontend : le site reste 100 % statique.
 
 ## Déploiement
 

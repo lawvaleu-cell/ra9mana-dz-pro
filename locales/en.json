@@ -351,13 +351,13 @@
       "privacyNote": "All contributor information is optional. If you don't choose to show it, it won't appear on the reference's public page."
     },
     "submitBtn": "Submit reference",
-    "packageInstructions": "Since the site is static (no server), your reference can't be published automatically. Download the package above, then send it by email to the RA9MANA team so it can be added to the library.",
+    "packageInstructions": "Clicking “Submit reference” opens a pre-filled GitHub page in a new tab to finish the submission (no data is sent to any other server).",
     "mailButton": "Send by email",
     "zipReadme": "Send this package to contact@ra9mana.dz so the reference can be reviewed and added to the library.",
     "success": {
-      "title": "Your reference has been prepared successfully",
-      "desc": "Download the package below and send it to us to complete your contribution.",
-      "toast": "Contribution package ready."
+      "title": "Your contribution is ready",
+      "desc": "A GitHub page pre-filled with your information just opened in a new tab. Drag in your PDF file (and your cover image, if any), then click “Submit new issue” to finish sending it. Your reference will be reviewed before it's published in the library.",
+      "toast": "Redirecting to GitHub…"
     },
     "errors": {
       "required": "This field is required.",
@@ -365,12 +365,21 @@
       "invalidType": "Unsupported file format.",
       "fileTooLarge": "The file exceeds the allowed size.",
       "packageFailed": "Something went wrong while preparing the file.",
-      "fixErrors": "Please fix the highlighted fields before submitting."
+      "fixErrors": "Please fix the highlighted fields before submitting.",
+      "submitFailed": "The reference could not be submitted. Please try again."
     },
     "description": "Share your research, theses and legal documents to enrich the library's knowledge base. Fill in the form below — every field about your identity is entirely optional.",
     "sectionBasic": "Basic information",
     "downloadPackageBtn": "Download reference package",
-    "packageInstructionsTitle": "Next step"
+    "packageInstructionsTitle": "Next step",
+    "githubButton": "Open the GitHub page",
+    "github": {
+      "attachPdfNote": "⚠️ Attach the file here: {filename}",
+      "attachCoverNote": "⚠️ Attach the cover image here: {filename}",
+      "attachPhotoNote": "⚠️ Attach your photo here: {filename}",
+      "noFile": "",
+      "popupBlocked": "Your browser seems to have blocked the pop-up — click “Open the GitHub page” below to finish submitting."
+    }
   },
   "admin": {
     "meta": {

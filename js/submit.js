@@ -9,7 +9,7 @@
    * public repository address used to build a normal github.com URL.
    * No token of any kind belongs here or anywhere else in this file.
    */
-  const GITHUB_REPO = "OWNER/REPO";
+  const GITHUB_REPO = "lawvaleu-cell/ra9mana-dz-pro";
   const ISSUE_TEMPLATE = "library-submission.yml";
   const ISSUE_LABEL = "library-submission";
 

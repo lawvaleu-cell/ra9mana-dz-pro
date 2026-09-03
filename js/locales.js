@@ -352,13 +352,13 @@ const RA9MANA_LOCALES = {
         "privacyNote": "Toutes les informations du contributeur sont optionnelles. Si vous ne choisissez pas de les afficher, elles n'apparaîtront pas sur la page publique de la référence."
       },
       "submitBtn": "Envoyer la référence",
-      "packageInstructions": "En cliquant sur « Préparer ma contribution », une page GitHub pré-remplie s'ouvre dans un nouvel onglet pour finaliser l'envoi (aucune donnée n'est envoyée à un autre serveur).",
+      "packageInstructions": "En cliquant sur « Envoyer la référence », votre contribution (y compris vos fichiers) est envoyée directement pour vérification. Elle sera examinée avant publication dans la bibliothèque.",
       "mailButton": "Envoyer par e-mail",
       "zipReadme": "Envoyez ce dossier à contact@ra9mana.dz afin que la référence soit vérifiée puis ajoutée à la bibliothèque.",
       "success": {
-        "title": "Votre contribution est prête",
-        "desc": "Une page GitHub pré-remplie avec vos informations vient de s'ouvrir dans un nouvel onglet. Joignez-y votre fichier PDF (et votre couverture, si vous en avez une) par glisser-déposer, puis cliquez sur « Submit new issue » pour finaliser l'envoi. Votre référence sera examinée avant publication dans la bibliothèque.",
-        "toast": "Redirection vers GitHub…"
+        "title": "Votre contribution a été envoyée",
+        "desc": "Merci ! Votre référence, avec les fichiers joints, a bien été reçue. Elle sera examinée avant publication dans la bibliothèque.",
+        "toast": "Référence envoyée avec succès"
       },
       "errors": {
         "required": "Ce champ est obligatoire.",
@@ -388,17 +388,17 @@ const RA9MANA_LOCALES = {
       },
       "eyebrow": "Panneau d'administration local",
       "title": "Admin local de la bibliothèque juridique",
-      "subtitle": "Préparez et organisez les fichiers de la bibliothèque avant de les pousser sur GitHub. Rien de tout ceci n'est envoyé à un serveur.",
-      "warningNotBackend": "Cette page fonctionne entièrement dans votre navigateur : elle ne modifie aucun fichier du dépôt automatiquement. Utilisez le bouton d'export pour générer les fichiers, puis copiez-les vous-même dans le projet.",
+      "subtitle": "Ajoutez une référence directement à la bibliothèque. L'envoi est traité par le serveur RA9MANA DZ.",
+      "warningNotBackend": "Les références ajoutées ici sont envoyées directement au serveur RA9MANA DZ, comme depuis la page « Contribuer ».",
       "tabAdd": "Ajouter une référence",
       "tabPending": "Références en attente",
       "tabExport": "Exporter",
-      "addReferenceBtn": "Ajouter à la liste d'attente",
+      "addReferenceBtn": "Envoyer la référence",
       "resetForm": "Réinitialiser le formulaire",
       "addSuccess": {
-        "title": "Référence ajoutée à la liste d'attente",
-        "desc": "Retrouvez-la dans l'onglet « En attente », puis exportez le tout une fois terminé.",
-        "toast": "Référence ajoutée."
+        "title": "Référence envoyée",
+        "desc": "La référence a été envoyée avec succès.",
+        "toast": "Référence envoyée."
       },
       "statusLabel": "Statut",
       "statusHint": "Seules les références « Publié » apparaissent sur la page publique de la bibliothèque.",
@@ -801,13 +801,13 @@ const RA9MANA_LOCALES = {
         "privacyNote": "All contributor information is optional. If you don't choose to show it, it won't appear on the reference's public page."
       },
       "submitBtn": "Submit reference",
-      "packageInstructions": "Clicking “Submit reference” opens a pre-filled GitHub page in a new tab to finish the submission (no data is sent to any other server).",
+      "packageInstructions": "Clicking “Submit reference” sends your contribution (including your files) directly for review. It will be checked before being published in the library.",
       "mailButton": "Send by email",
       "zipReadme": "Send this package to contact@ra9mana.dz so the reference can be reviewed and added to the library.",
       "success": {
-        "title": "Your contribution is ready",
-        "desc": "A GitHub page pre-filled with your information just opened in a new tab. Drag in your PDF file (and your cover image, if any), then click “Submit new issue” to finish sending it. Your reference will be reviewed before it's published in the library.",
-        "toast": "Redirecting to GitHub…"
+        "title": "Your contribution has been sent",
+        "desc": "Thank you! Your reference, along with the attached files, was received successfully. It will be reviewed before being published in the library.",
+        "toast": "Reference submitted successfully"
       },
       "errors": {
         "required": "This field is required.",
@@ -837,17 +837,17 @@ const RA9MANA_LOCALES = {
       },
       "eyebrow": "Local admin panel",
       "title": "Legal Library local admin",
-      "subtitle": "Prepare and organize the library files before pushing to GitHub. Nothing here is sent to a server.",
-      "warningNotBackend": "This page runs entirely in your browser: it does not modify any repository file automatically. Use the export button to generate the files, then copy them into the project yourself.",
+      "subtitle": "Add a reference directly to the library. Submission is handled by the RA9MANA DZ server.",
+      "warningNotBackend": "References added here are sent directly to the RA9MANA DZ server, just like from the “Contribute” page.",
       "tabAdd": "Add reference",
       "tabPending": "Pending references",
       "tabExport": "Export",
-      "addReferenceBtn": "Add to pending list",
+      "addReferenceBtn": "Submit reference",
       "resetForm": "Reset form",
       "addSuccess": {
-        "title": "Reference added to the pending list",
-        "desc": "Find it under the “Pending” tab, then export everything once you're done.",
-        "toast": "Reference added."
+        "title": "Reference submitted",
+        "desc": "The reference was submitted successfully.",
+        "toast": "Reference submitted."
       },
       "statusLabel": "Status",
       "statusHint": "Only “Published” references appear on the public library page.",
@@ -1250,13 +1250,13 @@ const RA9MANA_LOCALES = {
         "privacyNote": "جميع معلومات المساهم اختيارية. إن لم تختر عرضها، فلن تظهر في الصفحة العامة للمرجع."
       },
       "submitBtn": "إرسال المرجع",
-      "packageInstructions": "عند الضغط على «إرسال المرجع»، تُفتح صفحة GitHub مُعبّأة مسبقًا في نافذة جديدة لإتمام الإرسال (لا تُرسَل أي بيانات إلى أي خادم آخر).",
+      "packageInstructions": "عند الضغط على «إرسال المرجع»، تُرسَل مساهمتك (بما فيها ملفاتك) مباشرة للمراجعة. سيتم فحصها قبل نشرها في المكتبة.",
       "mailButton": "إرسال عبر البريد الإلكتروني",
       "zipReadme": "أرسل هذه الحزمة إلى contact@ra9mana.dz حتى تتم مراجعة المرجع وإضافته إلى المكتبة.",
       "success": {
-        "title": "مساهمتك جاهزة",
-        "desc": "فُتحت صفحة GitHub مُعبّأة ببياناتك في نافذة جديدة. أرفق فيها ملف PDF (وصورة الغلاف إن وجدت) بالسحب والإفلات، ثم اضغط «Submit new issue» لإتمام الإرسال. سيتم مراجعة مرجعك قبل نشره في المكتبة.",
-        "toast": "جارٍ التحويل إلى GitHub…"
+        "title": "تم إرسال مساهمتك بنجاح",
+        "desc": "شكرًا لك! تم استلام مرجعك مع الملفات المرفقة بنجاح. سيتم مراجعته قبل نشره في المكتبة.",
+        "toast": "تم إرسال المرجع بنجاح"
       },
       "errors": {
         "required": "هذا الحقل إلزامي.",
@@ -1286,17 +1286,17 @@ const RA9MANA_LOCALES = {
       },
       "eyebrow": "لوحة التحكم المحلية",
       "title": "Admin محلي للمكتبة القانونية",
-      "subtitle": "جهّز ونظّم ملفات المكتبة قبل رفعها إلى GitHub. لا يتم إرسال أي شيء إلى خادم.",
-      "warningNotBackend": "تعمل هذه الصفحة بالكامل داخل متصفحك: لا تُعدّل أي ملف في المشروع تلقائيًا. استخدم زر التصدير لتوليد الملفات ثم انسخها بنفسك إلى المشروع.",
+      "subtitle": "أضف مرجعًا مباشرة إلى المكتبة. تتم معالجة الإرسال عبر خادم رقمانة الجزائر.",
+      "warningNotBackend": "المراجع المُضافة هنا تُرسل مباشرة إلى خادم رقمانة الجزائر، تمامًا كما في صفحة «المساهمة».",
       "tabAdd": "إضافة مرجع",
       "tabPending": "المراجع المُعدّة",
       "tabExport": "تصدير",
-      "addReferenceBtn": "إضافة إلى قائمة الانتظار",
+      "addReferenceBtn": "إرسال المرجع",
       "resetForm": "تفريغ النموذج",
       "addSuccess": {
-        "title": "تمت إضافة المرجع إلى قائمة الانتظار",
-        "desc": "ستجده في تبويب «قيد الانتظار»، ثم قم بتصدير كل شيء عند الانتهاء.",
-        "toast": "تمت إضافة المرجع."
+        "title": "تم إرسال المرجع",
+        "desc": "تم إرسال المرجع بنجاح.",
+        "toast": "تم إرسال المرجع."
       },
       "statusLabel": "الحالة",
       "statusHint": "لا تظهر للعامة سوى المراجع التي حالتها «منشور».",

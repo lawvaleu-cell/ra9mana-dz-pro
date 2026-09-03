@@ -30,12 +30,19 @@ Pages…) tout fonctionne nativement, sans configuration.
 ## Structure du projet
 
 ```
-index.html            Page unique (une seule page, sections ancrées)
+index.html            Page d'accueil (une seule page, sections ancrées)
+library.html           Bibliothèque juridique — voir section dédiée plus bas
+submit.html             Contribuer à la bibliothèque
+admin.html               Admin local de la bibliothèque (aucun backend)
 css/styles.css         Design system complet (tokens, layout, RTL, animations)
+data/library.json       Données de la Bibliothèque juridique
+books/, covers/         Fichiers PDF et images de la bibliothèque
 js/
   products.js          Configuration centralisée des produits + catégories
   i18n.js               Moteur i18n (chargement des locales, RTL, persistance)
   main.js               Comportement du site (rendu dynamique, nav, formulaire…)
+  simple-header.js       En-tête/menu/toast partagés par les pages secondaires
+  library-*.js, reference-form.js, submit.js, admin.js   Bibliothèque juridique
 locales/
   fr.json  en.json  ar.json     Toutes les chaînes de l'interface, par langue
 assets/
@@ -107,6 +114,54 @@ Le site est 100% statique : le formulaire de contact ouvre le client e-mail
 du visiteur via `mailto:` (aucune donnée n'est envoyée à un serveur). Pour
 une vraie soumission de formulaire, branchez un service tiers (Formspree,
 Netlify Forms, etc.) dans `js/main.js` (`initContactForm`).
+
+## Bibliothèque juridique (Legal Library)
+
+Nouvelle section indépendante, construite avec la même identité visuelle et
+le même moteur i18n que le reste du site — 100% statique, sans backend.
+
+```
+library.html            Page publique : recherche, filtres, tri, fiches
+submit.html              Formulaire public de contribution (génère un .zip)
+admin.html                Admin local (navigateur uniquement) pour préparer
+                           les données/fichiers avant de les pousser sur GitHub
+data/library.json         Source de données de la bibliothèque (une entrée = un objet)
+books/                    Fichiers PDF des références (nom = id de la référence)
+covers/                   Images de couverture + photos de contributeurs
+js/
+  library-types.js        Liste centrale des 28 types de référence (extensible)
+  library-common.js       Chargement des données, recherche/filtre, validation
+  library-data.js          Copie embarquée de data/library.json (secours file://)
+  reference-form.js         Logique de formulaire partagée (submit + admin)
+  library.js, submit.js, admin.js   Contrôleurs propres à chaque page
+```
+
+**Ajouter une référence sans toucher au code** : ouvrez `admin.html` dans un
+navigateur (double-clic sur le fichier suffit), remplissez le formulaire
+« Ajouter une référence », puis dans l'onglet « Exporter » cliquez sur
+**⬇️ Export Library**. Un fichier `.zip` est généré contenant `data/library.json`
+(fusionné avec l'existant), ainsi que les PDF et couvertures. Décompressez-le,
+copiez son contenu dans le projet (en remplaçant `data/library.json`), puis :
+
+```bash
+git add .
+git commit -m "Add new library references"
+git push
+```
+
+Aucune référence ne s'affiche publiquement tant que son `status` n'est pas
+`"published"` (les autres valeurs — `draft`, `pending`, `rejected` —
+préparent un futur système de modération sans nécessiter de refonte).
+
+**Ajouter un type de référence** : ajoutez une entrée à `RA9MANA_LIBRARY_TYPES`
+dans `js/library-types.js`, puis la clé de traduction `libraryTypes.<id>`
+correspondante dans les 3 fichiers `locales/*.json` (et `js/locales.js`). Le
+filtre, les badges et le formulaire la prennent en compte automatiquement.
+
+**Contribution publique** : `submit.html` permet à un visiteur de préparer
+sa contribution (les mêmes champs qu'`admin.html`, sans le choix du statut)
+et de télécharger un `.zip` prêt à envoyer par e-mail à l'équipe RA9MANA pour
+vérification et intégration.
 
 ## Déploiement
 

@@ -1,5 +1,4 @@
 [
-  
   {
     "title": "اختبار",
     "author": "اختبار",
@@ -28,5 +27,36 @@
     "submitted_at": "2026-09-04T02:17:10.323834+00:00",
     "pdf": "books/REF-2026-00002.pdf",
     "cover": null
+  },
+  {
+    "title": "قانون حماية الأشخاص الطبيعيين في مجال معالجة المعطيات ذات الطابع الشخصي",
+    "author": "/",
+    "type": "law",
+    "category": "القانون الرقمي",
+    "year": "2018",
+    "language": "ar",
+    "country": "الجزائر",
+    "university": "",
+    "description": "قانون رقم 18-07 مؤرخ في 25 رمضان عام 1439 الموافق 10 يونيو سنة 2018",
+    "keywords": "",
+    "source": "",
+    "externalLink": "",
+    "notes": "",
+    "contributorName": "Admin",
+    "contributorEmail": "",
+    "contributorBio": "",
+    "linkWebsite": "",
+    "linkLinkedin": "",
+    "linkFacebook": "",
+    "linkInstagram": "",
+    "linkX": "",
+    "linkGithub": "",
+    "showName": "on",
+    "showPhoto": "on",
+    "id": "REF-2026-00003",
+    "status": "pending",
+    "submitted_at": "2026-09-04T02:47:04.901701+00:00",
+    "pdf": "books/REF-2026-00003.pdf",
+    "cover": "covers/REF-2026-00003.png"
   }
 ]

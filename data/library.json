@@ -336,5 +336,34 @@
     "files": {
       "pdf": "references/REF-2026-00001.pdf"
     }
+  },
+  {
+    "title": "اختبار",
+    "author": "اختبار",
+    "type": "law",
+    "category": "القانون الرقمي",
+    "year": "2015",
+    "language": "ar",
+    "country": "",
+    "university": "",
+    "description": "اختبار",
+    "keywords": "",
+    "source": "",
+    "externalLink": "",
+    "notes": "",
+    "contributorName": "",
+    "contributorEmail": "",
+    "contributorBio": "",
+    "linkWebsite": "",
+    "linkLinkedin": "",
+    "linkFacebook": "",
+    "linkInstagram": "",
+    "linkX": "",
+    "linkGithub": "",
+    "id": "REF-2026-00002",
+    "status": "pending",
+    "submitted_at": "2026-09-04T02:17:10.323834+00:00",
+    "pdf": "books/REF-2026-00002.pdf",
+    "cover": null
   }
 ]

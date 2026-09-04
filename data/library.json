@@ -1,5 +1,4 @@
 [
- 
   {
     "title": "قانون حماية الأشخاص الطبيعيين في مجال معالجة المعطيات ذات الطابع الشخصي",
     "author": "/",
@@ -30,5 +29,34 @@
     "submitted_at": "2026-09-04T02:47:04.901701+00:00",
     "pdf": "books/REF-2026-00003.pdf",
     "cover": "covers/REF-2026-00003.png"
+  },
+  {
+    "title": "قانون التجارة الإلكترونية",
+    "author": "/",
+    "type": "law",
+    "category": "القانون الرقمي (القانون التجاري)",
+    "year": "2018",
+    "language": "ar",
+    "country": "الجزائر",
+    "university": "",
+    "description": "قــــــانـــــون رقــم 18-05 مؤرخ ﰲ 24 شعــــبــــان عـــام 1439\r\nاﳌــوافــق 10 مــايــو ســنـة 2018، يـتــعـلـق بـالــتـجــارة\r\nاﻹلكترونيــــة.",
+    "keywords": "",
+    "source": "الجريدة الرسمية ",
+    "externalLink": "",
+    "notes": "",
+    "contributorName": "",
+    "contributorEmail": "",
+    "contributorBio": "",
+    "linkWebsite": "",
+    "linkLinkedin": "",
+    "linkFacebook": "",
+    "linkInstagram": "",
+    "linkX": "",
+    "linkGithub": "",
+    "id": "REF-2026-00004",
+    "status": "pending",
+    "submitted_at": "2026-09-04T10:40:04.706833+00:00",
+    "pdf": "books/REF-2026-00004.pdf",
+    "cover": null
   }
 ]

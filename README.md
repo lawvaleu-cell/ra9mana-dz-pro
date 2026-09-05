@@ -207,3 +207,56 @@ Le dossier est déployable tel quel sur n'importe quel hébergeur statique :
 
 Pensez à mettre à jour l'URL canonique dans `index.html`
 (`<link rel="canonical">`) et `sitemap.xml` avec le domaine final.
+
+## Website Compliance Assessment
+
+Nouvelle section indépendante, 100% statique (aucun backend, aucun appel
+réseau), construite avec la même identité visuelle et le même moteur i18n
+que le reste du site.
+
+```
+compliance/
+  index.html              Page publique : parcours de questions + résultat + certificat
+  verify.html              Vérification d'un certificat (démo statique)
+  i18n-extend.js            Ajoute le namespace `compliance` à RA9MANA_LOCALES
+                            (ne modifie pas locales/*.json ni js/locales.js)
+  questions.js              Source de vérité des questions (catégories,
+                            branchement conditionnel, textes fr/en/ar, scoring)
+  rules.js                  Configuration du scoring (poids des catégories,
+                            paliers de résultat, seuil du certificat)
+  app.js                    Moteur : navigation, validation, branchement,
+                            calcul du score, rendu des résultats
+  certificate.js             Formulaire de génération + rendu du certificat
+                            imprimable (QR code généré hors-ligne)
+  verify.js                  Logique de la page de vérification
+  verify-data.js              Jeu de données de démonstration pour la vérification
+  services/
+    certificate-service.js   Implémentation locale (localStorage) de
+                              l'émission/recherche de certificat — à
+                              remplacer plus tard par un vrai appel API
+                              sans changer le reste de la fonctionnalité
+assets/vendor/qrcode.js       Générateur de QR code autonome (aucune requête
+                              réseau, fonctionne aussi en file://)
+```
+
+**Ajouter ou modifier une question** : éditez uniquement
+`compliance/questions.js`. Chaque question porte son propre texte
+`fr`/`en`/`ar` (même principe que `js/products.js`), un champ `scored`
+(participe ou non au score), et un `showIf` optionnel pour la rendre
+conditionnelle à une réponse précédente.
+
+**Ajuster le scoring** : les poids par catégorie, les paliers de résultat
+(Excellent / Bon / À améliorer / Insuffisant) et le seuil d'éligibilité au
+certificat vivent dans `compliance/rules.js`.
+
+**Aucune donnée n'est envoyée à un serveur.** Les réponses au test restent
+en mémoire le temps de la session ; seul un certificat généré est
+sauvegardé dans le `localStorage` du navigateur (pour permettre à
+`verify.html` de le retrouver). L'architecture (`services/certificate-service.js`)
+est conçue pour qu'un futur backend (émission centralisée, vérification QR
+réelle, envoi des résultats) puisse remplacer l'implémentation locale sans
+réécrire le reste de la fonctionnalité.
+
+Un lien "Évaluation de conformité" a été ajouté à la navigation (desktop,
+menu mobile, pied de page) sur les pages existantes, avec la même charte
+que le reste du site.

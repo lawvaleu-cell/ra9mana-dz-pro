@@ -1184,3 +1184,459 @@ body.modal-open{ overflow: hidden; }
 .export-steps li{ margin-bottom: 6px; }
 
 /* Responsive: contact-form-style fields already covered by .form-field/.form-grid */
+
+/* ==========================================================================
+   Website Compliance Assessment (compliance/index.html, verify.html)
+   Additive section — reuses all existing tokens, buttons, cards & i18n.
+   ========================================================================== */
+.compliance-shell{
+  padding-block: calc(var(--space-7) + 20px) var(--space-6);
+  min-height: 60vh;
+}
+.compliance-shell .container{ max-width: 760px; }
+
+/* --- Landing --- */
+.compliance-landing{ text-align: center; }
+.compliance-landing .eyebrow{ justify-content: center; }
+.compliance-landing h1{
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 2.9rem);
+  line-height: 1.15;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--c-ink);
+  margin-bottom: var(--space-2);
+}
+.compliance-landing p.lead{
+  font-size: 1.05rem;
+  color: var(--c-text-muted);
+  max-width: 56ch;
+  margin-inline: auto;
+  margin-bottom: var(--space-3);
+}
+.compliance-start-note{
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--c-text-muted);
+  margin-top: var(--space-2);
+}
+.compliance-category-strip{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin-top: var(--space-4);
+}
+.compliance-category-chip{
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: .04em;
+  color: var(--c-text-muted);
+  background: var(--c-surface-raised);
+  border: 1px solid var(--c-line);
+  border-radius: 100px;
+  padding: 7px 14px;
+}
+
+/* --- Progress --- */
+.compliance-progress-wrap{ margin-bottom: var(--space-4); }
+.compliance-progress-top{
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.compliance-progress-caption{
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--c-text-muted);
+}
+.compliance-progress-pct{
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--c-brand-strong);
+  font-size: 1.05rem;
+}
+.compliance-progress-track{
+  width: 100%;
+  height: 8px;
+  border-radius: 100px;
+  background: var(--c-line);
+  overflow: hidden;
+}
+.compliance-progress-fill{
+  height: 100%;
+  border-radius: 100px;
+  background: linear-gradient(90deg, var(--c-brand), var(--c-brand-strong));
+  width: 0%;
+  transition: width .5s var(--ease);
+}
+
+/* --- Question card --- */
+.compliance-card{
+  background: var(--c-surface-raised);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-l);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-card);
+  animation: complianceCardIn .4s var(--ease);
+}
+@keyframes complianceCardIn{
+  from{ opacity: 0; transform: translateY(10px); }
+  to{ opacity: 1; transform: none; }
+}
+.compliance-card-category{
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--c-brand-strong);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: var(--space-2);
+}
+.compliance-card-category svg{ width: 15px; height: 15px; }
+.compliance-card h2{
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.4vw, 1.55rem);
+  font-weight: 600;
+  color: var(--c-ink);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+.compliance-card-desc{ color: var(--c-text-muted); font-size: 0.92rem; margin-bottom: var(--space-3); }
+
+.compliance-options{ display: flex; flex-direction: column; gap: 10px; margin-top: var(--space-3); }
+.compliance-option{
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--c-line);
+  border-radius: var(--radius-m);
+  cursor: pointer;
+  transition: border-color .2s var(--ease), background .2s var(--ease), transform .15s var(--ease);
+  background: var(--c-surface);
+}
+.compliance-option:hover{ border-color: var(--c-brand); }
+.compliance-option input{ width: 18px; height: 18px; margin-top: 1px; accent-color: var(--c-brand-strong); flex-shrink: 0; }
+.compliance-option span{ font-size: 0.96rem; color: var(--c-text); line-height: 1.4; }
+.compliance-option.is-selected{
+  border-color: var(--c-brand-strong);
+  background: var(--c-brand-soft);
+}
+.compliance-option.is-selected span{ color: var(--c-ink); font-weight: 600; }
+
+.compliance-error{
+  display: none;
+  align-items: center;
+  gap: 8px;
+  color: #C4432B;
+  font-size: 0.85rem;
+  margin-top: var(--space-2);
+  padding: 10px 14px;
+  background: #FBE1DD;
+  border-radius: var(--radius-s);
+}
+.compliance-error.is-visible{ display: flex; }
+.compliance-error svg{ width: 16px; height: 16px; flex-shrink: 0; }
+
+.compliance-nav{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+.compliance-nav .btn{ min-width: 130px; justify-content: center; }
+.compliance-nav-spacer{ flex: 1; }
+/* "Previous" always points to the start of reading order, opposite of
+   the site-wide "forward" arrow convention used by every other .btn. */
+.compliance-prev-cta svg{ transform: scaleX(-1); }
+html[dir="rtl"] .compliance-prev-cta svg{ transform: none; }
+.compliance-prev-cta:hover svg{ transform: scaleX(-1) translateX(3px); }
+html[dir="rtl"] .compliance-prev-cta:hover svg{ transform: translateX(3px); }
+
+/* --- Result --- */
+.compliance-result-hero{
+  text-align: center;
+  padding: var(--space-4) 0 var(--space-3);
+}
+.compliance-score-ring{ width: 180px; height: 180px; margin: 0 auto var(--space-3); position: relative; }
+.compliance-score-ring svg{ width: 100%; height: 100%; transform: rotate(-90deg); }
+.compliance-score-ring circle{ fill: none; stroke-width: 10; }
+.compliance-score-ring .ring-track{ stroke: var(--c-line); }
+.compliance-score-ring .ring-fill{
+  stroke: var(--c-brand-strong);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s var(--ease);
+}
+.compliance-score-ring-label{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.compliance-score-ring-label b{ font-family: var(--font-display); font-size: 2.4rem; color: var(--c-ink); line-height: 1; }
+.compliance-score-ring-label span{ font-size: 0.8rem; color: var(--c-text-muted); }
+.compliance-status-pill{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  background: var(--c-brand-soft);
+  color: var(--c-brand-strong);
+}
+.compliance-status-pill.level-excellent{ background: var(--c-brand-soft); color: var(--c-brand-strong); }
+.compliance-status-pill.level-good{ background: var(--c-accent-soft); color: #A85320; }
+.compliance-status-pill.level-needs-improvement,
+.compliance-status-pill.level-significant-gaps{ background: #FBE1DD; color: #C4432B; }
+
+.compliance-breakdown{ margin-top: var(--space-5); }
+.compliance-breakdown h3, .compliance-result-section h3{
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--c-ink);
+  margin-bottom: var(--space-2);
+}
+.compliance-breakdown-grid{ display: flex; flex-direction: column; gap: 12px; }
+.compliance-breakdown-row{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 6px 14px;
+  padding: 12px 16px;
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-m);
+  background: var(--c-surface-raised);
+}
+.compliance-breakdown-name{ font-size: 0.92rem; color: var(--c-text); font-weight: 500; }
+.compliance-breakdown-score{ font-family: var(--font-mono); font-size: 0.85rem; color: var(--c-text-muted); }
+.compliance-breakdown-track{ grid-column: 1 / -1; height: 6px; border-radius: 100px; background: var(--c-line); overflow: hidden; }
+.compliance-breakdown-fill{ height: 100%; background: var(--c-brand-strong); border-radius: 100px; }
+.compliance-breakdown-row.is-na .compliance-breakdown-fill{ background: var(--c-line); }
+.compliance-breakdown-row.is-na .compliance-breakdown-score{ font-style: italic; }
+
+.compliance-result-section{ margin-top: var(--space-5); }
+.compliance-result-list{ display: flex; flex-direction: column; gap: 10px; }
+.compliance-result-item{
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: var(--radius-m);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+.compliance-result-item.well{ background: var(--c-brand-soft); color: var(--c-ink-soft); }
+.compliance-result-item.improve{ background: var(--c-accent-soft); color: #7A3B12; }
+.compliance-result-item svg{ width: 17px; height: 17px; flex-shrink: 0; margin-top: 2px; }
+
+.compliance-recommend-list{ padding-inline-start: 1.3em; color: var(--c-text); }
+.compliance-recommend-list li{ margin-bottom: 8px; line-height: 1.55; }
+
+.compliance-notice-box{
+  margin-top: var(--space-5);
+  padding: var(--space-3);
+  border-radius: var(--radius-m);
+  background: var(--c-surface-raised);
+  border: 1px solid var(--c-line);
+}
+.compliance-notice-box h4{ font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--c-ink); margin-bottom: 8px; }
+.compliance-notice-box p{ font-size: 0.86rem; color: var(--c-text-muted); line-height: 1.6; }
+
+.compliance-warning-box{
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-m);
+  background: #FBE1DD;
+  border: 1.5px solid #E7A99B;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.compliance-warning-box svg{ width: 22px; height: 22px; color: #C4432B; flex-shrink: 0; margin-top: 2px; }
+.compliance-warning-box h4{ font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: #8C2E1F; margin-bottom: 6px; }
+.compliance-warning-box p{ font-size: 0.86rem; color: #7A2A1D; line-height: 1.6; }
+
+/* --- Certificate gate (name + confirm + generate) --- */
+.compliance-cert-gate{
+  margin-top: var(--space-5);
+  padding: var(--space-4);
+  border-radius: var(--radius-l);
+  background: var(--c-ink);
+  color: var(--on-dark-text);
+}
+.compliance-cert-gate h3{ font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; margin-bottom: 6px; }
+.compliance-cert-gate p{ color: var(--on-dark-muted); font-size: 0.92rem; margin-bottom: var(--space-3); }
+.compliance-cert-gate .form-field label{ color: var(--on-dark-text); }
+.compliance-cert-gate .form-field input{
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid var(--on-dark-line);
+  color: var(--on-dark-text);
+}
+.compliance-cert-gate .form-field input::placeholder{ color: var(--on-dark-muted); }
+.compliance-cert-gate .check-field{ color: var(--on-dark-text); align-items: flex-start; margin-top: var(--space-2); }
+.compliance-cert-gate .check-field input{ margin-top: 3px; }
+.compliance-cert-not-eligible{
+  margin-top: var(--space-5);
+  padding: var(--space-4);
+  border-radius: var(--radius-l);
+  background: var(--c-surface-raised);
+  border: 1px dashed var(--c-line);
+  text-align: center;
+}
+.compliance-cert-not-eligible h3{ font-family: var(--font-display); font-weight: 600; color: var(--c-ink); margin-bottom: 6px; }
+.compliance-cert-not-eligible p{ color: var(--c-text-muted); font-size: 0.9rem; }
+
+/* --- Certificate itself --- */
+.compliance-certificate-wrap{ margin-top: var(--space-5); }
+.compliance-certificate{
+  background: var(--c-surface-raised);
+  border: 1.5px solid var(--c-line);
+  border-radius: var(--radius-l);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-pop);
+  position: relative;
+  overflow: hidden;
+}
+.compliance-certificate::before{
+  content: "";
+  position: absolute;
+  inset-inline-start: -10%;
+  top: -30%;
+  width: 60%;
+  height: 160%;
+  background: radial-gradient(circle, rgba(0,207,214,0.08), transparent 65%);
+  pointer-events: none;
+}
+.compliance-cert-top{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  border-bottom: 1px solid var(--c-line);
+  padding-bottom: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+.compliance-cert-top img{ height: 36px; }
+.compliance-cert-eyebrow{
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--c-text-muted);
+}
+.compliance-cert-heading{
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-weight: 600;
+  color: var(--c-ink);
+  margin-bottom: var(--space-3);
+}
+.compliance-cert-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2) var(--space-4);
+  margin-bottom: var(--space-4);
+}
+.compliance-cert-field span{ display: block; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: .06em; color: var(--c-text-muted); margin-bottom: 4px; }
+.compliance-cert-field b{ font-family: var(--font-display); font-size: 1.05rem; color: var(--c-ink); font-weight: 600; }
+.compliance-cert-score{
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: var(--space-4);
+}
+.compliance-cert-score b{ font-family: var(--font-display); font-size: 3rem; color: var(--c-brand-strong); font-weight: 700; line-height: 1; }
+.compliance-cert-score span{ color: var(--c-text-muted); font-size: 1rem; }
+.compliance-cert-bottom{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--c-line);
+}
+.compliance-cert-qr{ text-align: center; }
+.compliance-cert-qr svg{ width: 96px; height: 96px; display: block; }
+.compliance-cert-qr p{ font-family: var(--font-mono); font-size: 0.68rem; color: var(--c-text-muted); margin-top: 6px; max-width: 140px; }
+.compliance-cert-notice{ font-size: 0.76rem; color: var(--c-text-muted); line-height: 1.55; max-width: 56ch; }
+.compliance-cert-actions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: var(--space-3);
+}
+
+/* --- Verify page --- */
+.compliance-verify-card{
+  background: var(--c-surface-raised);
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-l);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-card);
+}
+.compliance-verify-form{ display: flex; gap: 10px; margin-top: var(--space-2); }
+.compliance-verify-form input{
+  flex: 1;
+  padding: 13px 16px;
+  border-radius: var(--radius-s);
+  border: 1.5px solid var(--c-line);
+  background: var(--c-surface);
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+}
+.compliance-verify-form input:focus{ border-color: var(--c-brand-strong); outline: none; background: var(--c-surface-raised); }
+.compliance-verify-demo-note{ font-size: 0.8rem; color: var(--c-text-muted); margin-top: var(--space-2); line-height: 1.55; }
+.compliance-verify-result{ margin-top: var(--space-4); display: none; }
+.compliance-verify-result.is-visible{ display: block; }
+.compliance-verify-badge{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  margin-bottom: var(--space-3);
+}
+.compliance-verify-badge.valid{ background: var(--c-brand-soft); color: var(--c-brand-strong); }
+.compliance-verify-badge.invalid{ background: #FBE1DD; color: #C4432B; }
+.compliance-verify-badge svg{ width: 16px; height: 16px; }
+
+/* --- Print: certificate only --- */
+@media print{
+  body *{ visibility: hidden; }
+  .compliance-certificate, .compliance-certificate *{ visibility: visible; }
+  .compliance-certificate{
+    position: absolute;
+    inset-inline-start: 0;
+    top: 0;
+    width: 100%;
+    box-shadow: none;
+    border: none;
+  }
+  .compliance-cert-actions{ display: none !important; }
+  @page{ size: A4; margin: 18mm; }
+}
+
+/* --- Responsive --- */
+@media (max-width: 700px){
+  .compliance-shell{ padding-block: calc(var(--space-6) + 12px) var(--space-5); }
+  .compliance-card{ padding: var(--space-3); border-radius: var(--radius-m); }
+  .compliance-cert-grid{ grid-template-columns: 1fr; }
+  .compliance-cert-bottom{ flex-direction: column; align-items: flex-start; }
+  .compliance-score-ring{ width: 150px; height: 150px; }
+  .compliance-score-ring-label b{ font-size: 2rem; }
+  .compliance-nav .btn{ min-width: 0; flex: 1; }
+}

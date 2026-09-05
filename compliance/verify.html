@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title data-i18n="compliance.verify.title">Vérifier un certificat — RA9MANA DZ</title>
+<meta name="description" content="Vérifiez la validité d'un certificat d'évaluation de conformité RA9MANA.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://www.ra9mana.dz/compliance/verify.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Vérifier un certificat — RA9MANA DZ">
+<meta property="og:image" content="../assets/brand/logo.png">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" type="image/png" href="../assets/brand/logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main" data-i18n="skip">Aller au contenu</a>
+
+<header class="site-header" id="site-header">
+  <div class="container">
+    <a class="brand" href="../index.html" aria-label="RA9MANA DZ">
+      <img src="../assets/brand/logo.png" alt="RA9MANA DZ">
+    </a>
+
+    <nav class="nav-links" aria-label="Navigation principale">
+      <a href="../index.html#solutions" data-i18n="nav.solutions">Solutions</a>
+      <a href="../index.html#products" data-i18n="nav.produits">Produits</a>
+      <a href="../library.html" data-i18n="nav.library">Bibliothèque juridique</a>
+      <a href="index.html" data-i18n="nav.compliance">Évaluation de conformité</a>
+      <a href="../index.html#contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+
+    <div class="nav-right">
+      <div class="lang-switch" role="group" aria-label="Choix de la langue">
+        <button type="button" data-lang-btn="fr" aria-pressed="true">FR</button>
+        <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
+        <button type="button" data-lang-btn="ar" aria-pressed="false">العربية</button>
+      </div>
+      <a class="btn btn-primary btn-sm nav-cta" href="index.html" data-i18n="compliance.startCta">Démarrer l'évaluation</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu" data-i18n-aria="nav.menuOpen" aria-expanded="false" aria-controls="mobile-menu">
+        <svg><use href="../assets/icons/icons.svg#icon-menu"></use></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-menu-top">
+    <img src="../assets/brand/logo.png" alt="RA9MANA DZ">
+    <button id="mobile-menu-close" aria-label="Fermer le menu" data-i18n-aria="nav.menuClose">
+      <svg><use href="../assets/icons/icons.svg#icon-close"></use></svg>
+    </button>
+  </div>
+  <nav>
+    <a href="../index.html#solutions" data-i18n="nav.solutions">Solutions</a>
+    <a href="../index.html#products" data-i18n="nav.produits">Produits</a>
+    <a href="../library.html" data-i18n="nav.library">Bibliothèque juridique</a>
+    <a href="index.html" data-i18n="nav.compliance">Évaluation de conformité</a>
+    <a href="../index.html#contact" data-i18n="nav.contact">Contact</a>
+  </nav>
+  <div class="mobile-menu-foot">
+    <div class="lang-switch" role="group" aria-label="Choix de la langue">
+      <button type="button" data-lang-btn="fr">Français</button>
+      <button type="button" data-lang-btn="en">English</button>
+      <button type="button" data-lang-btn="ar">العربية</button>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+  <section class="compliance-shell">
+    <div class="container" style="max-width:560px">
+      <div class="eyebrow" data-i18n="compliance.verify.eyebrow">Vérification</div>
+      <h1 style="font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.4rem);font-weight:600;color:var(--c-ink);margin-bottom:8px" data-i18n="compliance.verify.title">Vérifier un certificat</h1>
+      <p class="lead" style="margin-bottom:var(--space-4)" data-i18n="compliance.verify.lead">Saisissez un identifiant de certificat RA9MANA pour vérifier sa validité.</p>
+
+      <div class="compliance-verify-card">
+        <div class="form-field full" style="margin-bottom:0">
+          <label for="compliance-verify-input" data-i18n="compliance.verify.inputLabel">Identifiant du certificat</label>
+          <div class="compliance-verify-form">
+            <input type="text" id="compliance-verify-input" data-i18n-placeholder="compliance.verify.inputPlaceholder" placeholder="ex. RA9-COMP-2026-A1B2C3" autocomplete="off">
+            <button type="button" class="btn btn-primary" id="compliance-verify-btn">
+              <span data-i18n="compliance.verify.verifyCta">Vérifier</span>
+            </button>
+          </div>
+        </div>
+        <p class="compliance-verify-demo-note" data-i18n="compliance.verify.demoNotice">Version statique : la vérification s'appuie sur les certificats générés dans ce navigateur et sur un jeu de données de démonstration local.</p>
+      </div>
+
+      <div class="compliance-verify-result" id="compliance-verify-result"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="../assets/brand/logo.png" alt="RA9MANA DZ">
+        <p data-i18n="footer.tagline">Solutions digitales pour des besoins réels.</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.colSolutions">Solutions</h4>
+        <ul>
+          <li><a href="../library.html" data-i18n="nav.library">Bibliothèque juridique</a></li>
+          <li><a href="index.html" data-i18n="nav.compliance">Évaluation de conformité</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.colCompany">À propos</h4>
+        <ul>
+          <li><a href="../index.html#why" data-i18n="footer.linkAbout">Pourquoi RA9MANA</a></li>
+          <li><a href="../index.html#contact" data-i18n="footer.linkContact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer.colLang">Langues</h4>
+        <ul>
+          <li><button type="button" data-lang-btn="fr">Français</button></li>
+          <li><button type="button" data-lang-btn="en">English</button></li>
+          <li><button type="button" data-lang-btn="ar">العربية</button></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="footer-year">2026</span> RA9MANA DZ. <span data-i18n="footer.rights">Tous droits réservés.</span></span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" aria-live="polite"><div class="toast-inner"></div></div>
+
+<script src="../js/products.js"></script>
+<script src="../js/locales.js"></script>
+<script src="i18n-extend.js"></script>
+<script src="../js/i18n.js"></script>
+<script src="../js/simple-header.js"></script>
+<script src="rules.js"></script>
+<script src="services/certificate-service.js"></script>
+<script src="verify-data.js"></script>
+<script src="verify.js"></script>
+</body>
+</html>

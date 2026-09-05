@@ -88,35 +88,43 @@
     "pdf": "books/REF-2026-00005.pdf",
     "cover": "covers/REF-2026-00005.png"
   },
-  {
-    "title": "قانون القواعد الخاصة للوقاية من الجرائم المتصلة بتكنولوجيات الإعلام والاتصال ومكافحتها",
-    "author": "/",
-    "type": "law",
-    "category": "القانون الرقمي",
-    "year": "2026",
-    "language": "ar",
-    "country": "الجزائر",
-    "university": "",
-    "description": "قانون رقم 09-04 المؤرخ في 14 شعبان عام 1430 الموافق 05 غشت سنة 2009",
-    "keywords": "",
-    "source": "الجريدة الرسمية",
-    "externalLink": "",
-    "notes": "",
-    "contributorName": "Ra9mana admin",
-    "contributorEmail": "",
-    "contributorBio": "",
-    "linkWebsite": "",
-    "linkLinkedin": "",
-    "linkFacebook": "",
-    "linkInstagram": "",
-    "linkX": "",
-    "linkGithub": "",
-    "showName": "on",
-    "showPhoto": "on",
-    "id": "REF-2026-00006",
-    "status": "published",
-    "submitted_at": "2026-09-05T00:43:51.270838+00:00",
-    "pdf": "books/REF-2026-00006.pdf",
-    "cover": "covers/REF-2026-00006.png"
-  }
+ {
+  "title": "قانون القواعد الخاصة للوقاية من الجرائم المتصلة بتكنولوجيات الإعلام والاتصال ومكافحتها",
+  "author": "/",
+  "type": "law",
+  "category": "القانون الرقمي",
+  "year": "2026",
+  "language": "ar",
+  "country": "الجزائر",
+  "university": "",
+  "description": "قانون رقم 09-04 المؤرخ في 14 شعبان عام 1430 الموافق 05 غشت سنة 2009",
+  "keywords": "",
+  "source": "الجريدة الرسمية",
+  "externalLink": "",
+  "notes": "",
+
+  "contributor": {
+    "name": "Ra9mana admin",
+    "bio": "",
+    "photo": "",
+    "showName": true,
+    "showPhoto": true,
+    "showBio": false,
+    "showLinks": false,
+    "links": {
+      "website": "",
+      "linkedin": "",
+      "facebook": "",
+      "instagram": "",
+      "x": "",
+      "github": ""
+    }
+  },
+
+  "id": "REF-2026-00006",
+  "status": "published",
+  "submitted_at": "2026-09-05T00:43:51.270838+00:00",
+  "pdf": "books/REF-2026-00006.pdf",
+  "cover": "covers/REF-2026-00006.png"
+}
 ]

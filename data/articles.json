@@ -86,35 +86,5 @@
     },
     "status": "published"
   },
-  {
-    "id": "ART-2026-00004",
-    "title": "test",
-    "category": "test",
-    "date": "2026-09-06",
-    "author": {
-      "name": "test",
-      "email": "testààà@gmail.com",
-      "bio": "test",
-      "photo": "authors/ART-2026-00004.jpeg",
-      "showName": true,
-      "showPhoto": true,
-      "showBio": true,
-      "showLinks": true,
-      "links": {
-        "website": "https://ra9mana-dz-pro.onrender.com",
-        "linkedin": "test",
-        "facebook": "test",
-        "instagram": "test",
-        "x": "test",
-        "github": "ttes"
-      }
-    },
-    "content": {
-      "introduction": "test",
-      "body": "## test\r\ntest**",
-      "conclusion": "test"
-    },
-    "status": "published",
-    "submitted_at": "2026-09-06T21:51:02.071480+00:00"
-  }
+
 ]

@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title data-i18n="library.meta.title">Bibliothèque juridique — RA9MANA DZ</title>
-<meta name="description" content="La Bibliothèque juridique RA9MANA DZ : recherches, mémoires, ouvrages, lois et décisions de justice réunis en un seul endroit.">
+<title data-i18n="articles.meta.title">Articles juridiques — RA9MANA DZ</title>
+<meta name="description" content="Des articles juridiques rédigés par des chercheurs et professionnels du droit, à lire directement sur la Bibliothèque juridique RA9MANA DZ.">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://www.ra9mana.dz/library.html">
+<link rel="canonical" href="https://www.ra9mana.dz/articles.html">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Bibliothèque juridique — RA9MANA DZ">
+<meta property="og:title" content="Articles juridiques — RA9MANA DZ">
 <meta property="og:image" content="assets/brand/logo.png">
 <meta property="og:locale" content="fr_FR">
 <meta name="twitter:card" content="summary_large_image">
@@ -40,7 +40,7 @@ s0.parentNode.insertBefore(s1,s0);
 <a class="skip-link" href="#main" data-i18n="skip">Aller au contenu</a>
 
 <!-- =========================================================
-     HEADER (identical structure to index.html)
+     HEADER (identical structure to library.html)
 ========================================================== -->
 <header class="site-header" id="site-header">
   <div class="container">
@@ -62,7 +62,7 @@ s0.parentNode.insertBefore(s1,s0);
         <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
         <button type="button" data-lang-btn="ar" aria-pressed="false">العربية</button>
       </div>
-      <a class="btn btn-primary btn-sm nav-cta" href="submit.html" data-i18n="library.ctaContribute">Enrichir la bibliothèque</a>
+      <a class="btn btn-primary btn-sm nav-cta" href="submit-article.html" data-i18n="articles.ctaAdd">Ajouter un article</a>
       <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu" data-i18n-aria="nav.menuOpen" aria-expanded="false" aria-controls="mobile-menu">
         <svg><use href="assets/icons/icons.svg#icon-menu"></use></svg>
       </button>
@@ -90,7 +90,7 @@ s0.parentNode.insertBefore(s1,s0);
       <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
       <button type="button" data-lang-btn="ar" aria-pressed="false">العربية</button>
     </div>
-    <a class="btn btn-on-dark btn-block" href="submit.html" data-i18n="library.ctaContribute">Enrichir la bibliothèque</a>
+    <a class="btn btn-on-dark btn-block" href="submit-article.html" data-i18n="articles.ctaAdd">Ajouter un article</a>
   </div>
 </div>
 
@@ -98,17 +98,17 @@ s0.parentNode.insertBefore(s1,s0);
 
   <section class="page-hero">
     <div class="container">
-      <div class="eyebrow" data-i18n="library.eyebrow">Bibliothèque juridique</div>
-      <h1 data-i18n="library.title">La Bibliothèque juridique</h1>
-      <p class="lead" data-i18n="library.description">Un fonds de connaissance juridique : recherches, mémoires, ouvrages, lois, décrets et décisions de justice, réunis et organisés en un seul endroit.</p>
+      <div class="eyebrow" data-i18n="articles.eyebrow">Bibliothèque juridique</div>
+      <h1 data-i18n="articles.title">Articles juridiques</h1>
+      <p class="lead" data-i18n="articles.description">Des analyses et articles juridiques rédigés par des chercheurs, universitaires et professionnels du droit, à lire directement, sans téléchargement.</p>
       <nav class="library-subnav" aria-label="Bibliothèque">
-        <a class="filter-chip is-active" href="library.html" data-i18n="library.subnav.references">Références</a>
-        <a class="filter-chip" href="articles.html" data-i18n="library.subnav.articles">Articles</a>
+        <a class="filter-chip" href="library.html" data-i18n="library.subnav.references">Références</a>
+        <a class="filter-chip is-active" href="articles.html" data-i18n="library.subnav.articles">Articles</a>
       </nav>
       <div class="hero-ctas">
-        <a class="btn btn-primary" href="submit.html">
-          <span data-i18n="library.ctaContribute">Enrichir la bibliothèque</span>
-          <svg><use href="assets/icons/icons.svg#icon-arrow"></use></svg>
+        <a class="btn btn-primary" href="submit-article.html">
+          <span data-i18n="articles.ctaAdd">Ajouter un article</span>
+          <svg><use href="assets/icons/icons.svg#icon-plus"></use></svg>
         </a>
       </div>
     </div>
@@ -119,100 +119,22 @@ s0.parentNode.insertBefore(s1,s0);
       <div class="library-toolbar-row">
         <div class="library-search">
           <svg><use href="assets/icons/icons.svg#icon-search"></use></svg>
-          <input type="search" id="library-search-input" data-i18n-placeholder="library.searchPlaceholder" placeholder="Rechercher dans la bibliothèque…">
+          <input type="search" id="articles-search-input" data-i18n-placeholder="articles.searchPlaceholder" placeholder="Rechercher un article…">
         </div>
-        <div class="library-sort">
-          <label for="library-sort-select" data-i18n="library.sort.label">Trier</label>
-          <select id="library-sort-select">
-            <option value="newest" data-i18n="library.sort.newest">Plus récent</option>
-            <option value="oldest" data-i18n="library.sort.oldest">Plus ancien</option>
-            <option value="titleAsc" data-i18n="library.sort.titleAsc">Titre A→Z</option>
-            <option value="titleDesc" data-i18n="library.sort.titleDesc">Titre Z→A</option>
-          </select>
-        </div>
-        <button type="button" class="btn btn-ghost btn-sm library-filter-toggle" id="library-filter-toggle">
-          <svg><use href="assets/icons/icons.svg#icon-filter"></use></svg>
-          <span data-i18n="library.filters.toggle">Filtres</span>
-        </button>
       </div>
-      <div class="library-results-meta" id="library-results-meta"></div>
+      <div class="filter-type-chips" id="article-category-chips"></div>
+      <div class="library-results-meta" id="articles-results-meta"></div>
     </div>
   </div>
 
   <section>
-    <div class="container">
-      <div class="library-body">
-
-        <aside class="library-filters" id="library-filters">
-          <div class="library-filters-close">
-            <button type="button" class="ref-icon-btn" id="library-filters-close-btn" aria-label="Close">
-              <svg><use href="assets/icons/icons.svg#icon-close"></use></svg>
-            </button>
-          </div>
-
-          <h4 data-i18n="library.filters.type">Type de référence</h4>
-          <div class="filter-type-chips" id="filter-type-chips"></div>
-
-          <h4 style="margin-top:var(--space-3)" data-i18n="library.filters.refine">Affiner</h4>
-          <div class="filter-field">
-            <label for="filter-category" data-i18n="library.filters.category">Domaine juridique</label>
-            <select id="filter-category"></select>
-          </div>
-          <div class="filter-field">
-            <label for="filter-author" data-i18n="library.filters.author">Auteur</label>
-            <select id="filter-author"></select>
-          </div>
-          <div class="filter-field">
-            <label for="filter-year" data-i18n="library.filters.year">Année</label>
-            <select id="filter-year"></select>
-          </div>
-          <div class="filter-field">
-            <label for="filter-language" data-i18n="library.filters.language">Langue</label>
-            <select id="filter-language"></select>
-          </div>
-          <div class="filter-field">
-            <label for="filter-university" data-i18n="library.filters.university">Université / Institution</label>
-            <select id="filter-university"></select>
-          </div>
-          <div class="filter-field">
-            <label for="filter-country" data-i18n="library.filters.country">Pays</label>
-            <select id="filter-country"></select>
-          </div>
-
-          <button type="button" class="filter-clear" id="filter-clear">
-            <svg><use href="assets/icons/icons.svg#icon-close"></use></svg>
-            <span data-i18n="library.filters.clearAll">Réinitialiser les filtres</span>
-          </button>
-        </aside>
-
-        <div>
-          <div class="reference-grid" id="reference-grid">
-            <div class="library-state">
-              <svg><use href="assets/icons/icons.svg#icon-book"></use></svg>
-              <h3 data-i18n="library.loading">Chargement de la bibliothèque…</h3>
-            </div>
-          </div>
-          <div class="load-more-wrap" id="load-more-wrap" style="display:none">
-            <button type="button" class="btn btn-ghost" id="load-more-btn">
-              <span data-i18n="library.loadMore">Voir plus de références</span>
-              <svg><use href="assets/icons/icons.svg#icon-arrow"></use></svg>
-            </button>
-          </div>
+    <div class="container" style="max-width: 760px">
+      <div class="article-feed" id="articles-feed">
+        <div class="library-state">
+          <svg><use href="assets/icons/icons.svg#icon-book"></use></svg>
+          <h3 data-i18n="articles.loading">Chargement des articles…</h3>
         </div>
-
       </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="contribute-band reveal">
-      <div class="eyebrow" style="justify-content:center" data-i18n="library.contributeSection.eyebrow">Contribuer</div>
-      <h2 data-i18n="library.contributeSection.title">Contribuez à un fonds de connaissance juridique plus riche.</h2>
-      <p data-i18n="library.contributeSection.desc">Chercheurs, étudiants et passionnés de droit peuvent partager leurs recherches, mémoires, ouvrages et documents juridiques pour enrichir la bibliothèque.</p>
-      <a class="btn btn-primary" href="submit.html">
-        <span data-i18n="library.ctaContribute">Enrichir la bibliothèque</span>
-        <svg><use href="assets/icons/icons.svg#icon-arrow"></use></svg>
-      </a>
     </div>
   </section>
 
@@ -259,10 +181,6 @@ s0.parentNode.insertBefore(s1,s0);
 
 <div class="toast" id="toast" aria-live="polite"><div class="toast-inner"></div></div>
 
-<div class="ref-modal-backdrop" id="ref-modal-backdrop">
-  <div class="ref-modal" id="ref-modal-content" style="position:relative"></div>
-</div>
-
 <script src="js/products.js"></script>
 <script src="js/locales.js"></script>
 <script src="compliance/i18n-extend.js"></script>
@@ -272,6 +190,8 @@ s0.parentNode.insertBefore(s1,s0);
 <script src="js/library-data.js"></script>
 <script src="js/library-common.js"></script>
 <script src="js/simple-header.js"></script>
-<script src="js/library.js"></script>
+<script src="js/articles-data.js"></script>
+<script src="js/articles-common.js"></script>
+<script src="js/articles.js"></script>
 </body>
 </html>

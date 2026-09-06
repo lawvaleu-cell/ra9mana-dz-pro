@@ -82,7 +82,7 @@
         previewTitle: "Aperçu",
         previewEmpty: "L'aperçu de votre article apparaîtra ici au fur et à mesure de la saisie.",
         submitBtn: "Publier l'article",
-        packageInstructions: "En cliquant sur « Publier l'article », votre contribution est enregistrée dans ce navigateur, à titre d'aperçu — aucune donnée n'est envoyée à un serveur pour le moment.",
+        packageInstructions: "En cliquant sur « Publier l'article », votre contribution est envoyée pour validation. Elle sera publiée après approbation.",
         success: {
           title: "Votre article a été enregistré",
           desc: "Merci ! Votre article a été enregistré localement dans ce navigateur.",
@@ -244,7 +244,7 @@
         previewTitle: "معاينة",
         previewEmpty: "ستظهر هنا معاينة مقالك أثناء الكتابة.",
         submitBtn: "نشر المقال",
-        packageInstructions: "بالضغط على «نشر المقال»، تُحفظ مساهمتك داخل هذا المتصفح على سبيل المعاينة فقط — لا تُرسل أي بيانات إلى أي خادم في هذه المرحلة.",
+        packageInstructions: "بالضغط على «نشر المقال»، تُرسل مساهمتك للمراجعة. وسيتم نشرها بعد الموافقة عليها.",
         success: {
           title: "تم حفظ مقالك",
           desc: "شكرًا لك! تم حفظ مقالك محليًا داخل هذا المتصفح.",

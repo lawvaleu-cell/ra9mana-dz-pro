@@ -153,6 +153,8 @@
     return { valid, firstInvalid };
   }
 
+  const SUBMIT_ENDPOINT = "https://server-5xab.onrender.com/api/submit-article";
+
   function buildEntry(form) {
     const fd = new FormData(form);
     const title = (fd.get("title") || "").trim();
@@ -163,6 +165,7 @@
       date: new Date().toISOString().slice(0, 10),
       author: {
         name: (fd.get("authorName") || "").trim(),
+        email: (fd.get("authorEmail") || "").trim(),
         bio: (fd.get("authorBio") || "").trim(),
         photo: previewPhotoDataUrl || "",
         showName: fd.get("showName") === "on",
@@ -223,7 +226,7 @@
     wireEditorToolbar(toolbar, bodyTextarea, refresh);
     refresh();
 
-    form.addEventListener("submit", (e) => {
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const { valid, firstInvalid } = validate(form);
       if (!valid) {
@@ -231,18 +234,47 @@
         return;
       }
 
-      const entry = buildEntry(form);
-      RA9MANA_ARTICLES.addDraft(entry);
+      const submitBtn = form.querySelector("button[type=submit]");
+      submitBtn.disabled = true;
 
-      document.getElementById("form-success").classList.add("is-visible");
-      document.getElementById("form-success").scrollIntoView({ behavior: "smooth", block: "center" });
+      try {
+        // FormData already contains every named text field and checkbox:
+        // title, category, introduction, body, conclusion, author name/email/bio,
+        // all social links, and all visibility flags. The photo is appended explicitly.
+        const fd = new FormData(form);
+        if (fileState.authorPhoto) {
+          fd.append("authorPhoto", fileState.authorPhoto, fileState.authorPhoto.name);
+        }
 
-      if (window.RA9MANA_showToast) {
-        window.RA9MANA_showToast(RA9MANA_I18N.t("articleSubmit.success.toast") || "Article saved successfully");
+        const res = await fetch(SUBMIT_ENDPOINT, {
+          method: "POST",
+          body: fd
+        });
+
+        let payload = null;
+        try { payload = await res.json(); } catch (parseErr) { payload = null; }
+
+        if (!res.ok || (payload && payload.success === false)) {
+          throw new Error((payload && (payload.message || payload.error)) || `HTTP ${res.status}`);
+        }
+
+        document.getElementById("form-success").classList.add("is-visible");
+        document.getElementById("form-success").scrollIntoView({ behavior: "smooth", block: "center" });
+
+        if (window.RA9MANA_showToast) {
+          window.RA9MANA_showToast(RA9MANA_I18N.t("articleSubmit.success.toast") || "Article submitted successfully");
+        }
+
+        resetFormState(form);
+        refresh();
+      } catch (err) {
+        console.error("Article submission failed:", err);
+        if (window.RA9MANA_showToast) {
+          window.RA9MANA_showToast(RA9MANA_I18N.t("submit.errors.submitFailed") || "Something went wrong. Please try again.");
+        }
+      } finally {
+        submitBtn.disabled = false;
       }
-
-      resetFormState(form);
-      refresh();
     });
   }
 

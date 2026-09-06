@@ -186,7 +186,7 @@
       "showName": true,
       "showPhoto": true,
       "showBio": false,
-      "showLinks": false,
+      "showLinks": true,
       "links": {
         "website": "https://ra9mana-dz-pro.onrender.com",
         "linkedin": "",

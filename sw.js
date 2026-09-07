@@ -1,4 +1,4 @@
-const VERSION = 'ra9mana-pwa-v1';
+const VERSION = 'ra9mana-pwa-v2';
 const SHELL = `${VERSION}-shell`;
 const RUNTIME = `${VERSION}-runtime`;
 const DATA = `${VERSION}-data`;
@@ -18,6 +18,7 @@ const APP_SHELL = [
   './assets/products/restaurant.svg',
   './assets/pwa/icon-192.png',
   './assets/pwa/icon-512.png',
+  './assets/ra9mon/ra9mon.png',
   './assets/vendor/qrcode.js',
   './compliance/app.js',
   './compliance/certificate.js',

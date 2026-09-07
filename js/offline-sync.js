@@ -4,7 +4,7 @@
   const LIBRARY_URL = 'data/library.json';
   const ARTICLES_URL = 'data/articles.json';
   const SYNC_KEY = 'ra9mana-last-sync';
-  const CACHE_NAME = 'ra9mana-pwa-v1-runtime';
+  const CACHE_NAME = 'ra9mana-pwa-v2-runtime';
   let running = false;
 
   function isOnline() { return navigator.onLine !== false; }
@@ -25,7 +25,7 @@
     for (const item of Array.isArray(list) ? list : []) {
       for (const key of ['pdf', 'cover']) {
         const value = item && item[key];
-        if (typeof value === 'string' && value && !/^https?:\/\//i.test(value)) out.push(value);
+        if (typeof value === 'string' && value) out.push(value);
       }
       const photo = item?.contributor?.photo || item?.author?.photo;
       if (typeof photo === 'string' && photo && !/^https?:\/\//i.test(photo)) out.push(photo);

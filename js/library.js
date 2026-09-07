@@ -4,6 +4,7 @@
   let ALL = [];         // all published references
   let VISIBLE = [];     // after search+filter+sort
   let renderCount = 0;
+  let activePdfObjectUrl = '';
   const PAGE_SIZE = 9;
 
   const state = {
@@ -257,13 +258,44 @@
 
     const toggleBtn = document.getElementById("ref-toggle-pdf");
     if (toggleBtn) {
-      toggleBtn.addEventListener("click", () => {
+      toggleBtn.addEventListener("click", async () => {
         const viewer = document.getElementById("ref-pdf-viewer");
         const iframe = viewer.querySelector("iframe");
         const isHidden = viewer.style.display === "none";
-        viewer.style.display = isHidden ? "block" : "none";
-        if (isHidden) iframe.src = ref.pdf;
-        else iframe.src = "";
+
+        if (!isHidden) {
+          viewer.style.display = "none";
+          iframe.src = "";
+          if (activePdfObjectUrl) {
+            URL.revokeObjectURL(activePdfObjectUrl);
+            activePdfObjectUrl = "";
+          }
+          return;
+        }
+
+        viewer.style.display = "block";
+        toggleBtn.disabled = true;
+        const originalLabel = toggleBtn.querySelector("span");
+        if (originalLabel) originalLabel.textContent = "…";
+
+        try {
+          if (window.RA9MANA_OFFLINE?.getFileUrl) {
+            activePdfObjectUrl = await window.RA9MANA_OFFLINE.getFileUrl(ref.pdf);
+          } else if (navigator.onLine !== false) {
+            activePdfObjectUrl = ref.pdf;
+          }
+
+          if (!activePdfObjectUrl) {
+            viewer.style.display = "none";
+            alert("Ce document n’est pas encore disponible hors ligne. Ouvrez-le une fois avec Internet pour le synchroniser.");
+            return;
+          }
+
+          iframe.src = activePdfObjectUrl;
+        } finally {
+          toggleBtn.disabled = false;
+          if (originalLabel) originalLabel.textContent = readLabel;
+        }
       });
     }
 
@@ -277,6 +309,10 @@
   function closeModal(skipHistory) {
     els.modalBackdrop.classList.remove("is-open");
     document.body.classList.remove("modal-open");
+    if (activePdfObjectUrl && activePdfObjectUrl.startsWith("blob:")) {
+      URL.revokeObjectURL(activePdfObjectUrl);
+    }
+    activePdfObjectUrl = "";
     els.modalBody.innerHTML = "";
     if (!skipHistory) {
       const url = new URL(window.location.href);

@@ -1,4 +1,4 @@
-const VERSION = 'ra9mana-pwa-v2';
+const VERSION = 'ra9mana-pwa-v3';
 const SHELL = `${VERSION}-shell`;
 const RUNTIME = `${VERSION}-runtime`;
 const DATA = `${VERSION}-data`;

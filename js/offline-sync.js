@@ -4,10 +4,14 @@
   const LIBRARY_URL = 'data/library.json';
   const ARTICLES_URL = 'data/articles.json';
   const SYNC_KEY = 'ra9mana-last-sync';
-  const CACHE_NAME = 'ra9mana-pwa-v2-runtime';
+  const CACHE_NAME = 'ra9mana-pwa-v3-runtime';
   let running = false;
 
   function isOnline() { return navigator.onLine !== false; }
+
+  function resolveUrl(path) {
+    return new URL(path, location.href).href;
+  }
 
   async function openCache() {
     if (!('caches' in window)) return null;
@@ -28,7 +32,7 @@
         if (typeof value === 'string' && value) out.push(value);
       }
       const photo = item?.contributor?.photo || item?.author?.photo;
-      if (typeof photo === 'string' && photo && !/^https?:\/\//i.test(photo)) out.push(photo);
+      if (typeof photo === 'string' && photo) out.push(photo);
     }
     return [...new Set(out)];
   }
@@ -39,12 +43,35 @@
     let cached = 0;
     for (const path of urls) {
       try {
-        const absolute = new URL(path, location.href).href;
+        const absolute = resolveUrl(path);
         const res = await fetch(absolute, { cache: 'no-store' });
         if (res.ok) { await cache.put(absolute, res.clone()); cached++; }
       } catch (_) { /* one unavailable file must not stop the sync */ }
     }
     return { total: urls.length, cached };
+  }
+
+  async function getFileUrl(path) {
+    if (!path) return '';
+    const absolute = resolveUrl(path);
+    const cache = await openCache();
+    if (cache) {
+      const cached = await cache.match(absolute);
+      if (cached) {
+        const blob = await cached.blob();
+        return URL.createObjectURL(blob);
+      }
+    }
+    if (!isOnline()) return '';
+    try {
+      const res = await fetch(absolute, { cache: 'no-store' });
+      if (!res.ok) return '';
+      if (cache) await cache.put(absolute, res.clone());
+      const blob = await res.blob();
+      return URL.createObjectURL(blob);
+    } catch (_) {
+      return '';
+    }
   }
 
   function setStatus(text, kind = '') {
@@ -94,4 +121,10 @@
     setTimeout(sync, 700);
   });
   window.addEventListener('online', sync);
+
+  window.RA9MANA_OFFLINE = {
+    getFileUrl,
+    resolveUrl,
+    sync
+  };
 })();

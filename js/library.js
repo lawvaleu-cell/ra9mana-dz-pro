@@ -204,6 +204,20 @@
       </div>`;
   }
 
+  function citationBlock(ref, lang) {
+    const c = RA9MANA_CITATION;
+    const full = c.full(ref, lang);
+    const short = c.short(ref, lang);
+    const bib = c.bibliography(ref, lang);
+    const labels = lang === "ar"
+      ? { title: "التهميش والاستشهاد", full: "التهميش الكامل", short: "التهميش المختصر", bib: "قائمة المراجع", copy: "نسخ" }
+      : lang === "en"
+        ? { title: "Citation & bibliography", full: "Full citation", short: "Short citation", bib: "Bibliography", copy: "Copy" }
+        : { title: "Référence prête à copier", full: "Référence complète", short: "Référence abrégée", bib: "Bibliographie", copy: "Copier" };
+    const box = (key, value) => `<div class="citation-row"><div><span class="citation-label">${RA9MANA_LIBRARY.esc(key)}</span><div class="citation-text" data-citation-value="${RA9MANA_LIBRARY.esc(value)}">${RA9MANA_LIBRARY.esc(value)}</div></div><button type="button" class="citation-copy" data-copy-citation="${RA9MANA_LIBRARY.esc(value)}">${RA9MANA_LIBRARY.esc(labels.copy)}</button></div>`;
+    return `<section class="citation-panel" aria-label="${RA9MANA_LIBRARY.esc(labels.title)}"><div class="citation-panel-head"><div><span class="citation-eyebrow">${RA9MANA_LIBRARY.esc(labels.title)}</span><h3>📝 ${RA9MANA_LIBRARY.esc(labels.full)}</h3></div><span class="citation-auto">AUTO</span></div>${box(labels.full, full)}${box(labels.short, short)}${box(labels.bib, bib)}</section>`;
+  }
+
   function openModal(ref) {
     const lang = RA9MANA_I18N.getLang();
     const typeLabel = RA9MANA_LIBRARY.typeLabelFor(ref.type, lang);
@@ -244,6 +258,7 @@
         <p class="ref-modal-desc">${RA9MANA_LIBRARY.esc(ref.description || "")}</p>
         ${keywords}
         ${sourceLine}
+        ${typeof RA9MANA_CITATION !== "undefined" ? citationBlock(ref, lang) : ""}
         <div class="ref-modal-actions">
           ${ref.pdf
             ? `<button type="button" class="btn btn-primary btn-sm" id="ref-toggle-pdf"><span>${RA9MANA_LIBRARY.esc(readLabel)}</span><svg><use href="assets/icons/icons.svg#icon-eye"></use></svg></button>`
@@ -285,6 +300,21 @@
         }
       });
     }
+
+    els.modalBody.querySelectorAll("[data-copy-citation]").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const text = btn.getAttribute("data-copy-citation") || "";
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch (_) {
+          const area = document.createElement("textarea");
+          area.value = text; area.style.position = "fixed"; area.style.opacity = "0";
+          document.body.appendChild(area); area.select(); document.execCommand("copy"); area.remove();
+        }
+        const old = btn.textContent; btn.textContent = "✓";
+        setTimeout(() => { btn.textContent = old; }, 1200);
+      });
+    });
 
     els.modalBackdrop.classList.add("is-open");
     document.body.classList.add("modal-open");

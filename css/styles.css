@@ -1829,3 +1829,18 @@ html[dir="rtl"] .ra9mon-hint{right:auto;left:72px;}
   .ra9mon-hint{display:none;}
   .ra9mon-panel{width:calc(100vw - 28px);}
 }
+
+/* ---------------------------------------------------------
+   Automatic legal citation panel
+--------------------------------------------------------- */
+.citation-panel{margin-top:var(--space-4);padding:16px;border:1px solid var(--c-line);border-radius:var(--radius-m);background:linear-gradient(180deg,var(--c-surface),rgba(248,250,252,.72));}
+.citation-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;}
+.citation-eyebrow{display:block;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--c-brand-strong);margin-bottom:3px;}
+.citation-panel h3{margin:0;font-size:1rem;color:var(--c-ink);}
+.citation-auto{font-size:.68rem;font-weight:800;letter-spacing:.08em;padding:5px 8px;border-radius:999px;background:var(--c-brand-soft);color:var(--c-brand-strong);}
+.citation-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:11px 0;border-top:1px solid var(--c-line);}
+.citation-label{display:block;font-size:.72rem;font-weight:700;color:var(--c-text-muted);margin-bottom:4px;}
+.citation-text{font-size:.86rem;line-height:1.65;color:var(--c-ink);overflow-wrap:anywhere;}
+.citation-copy{border:1px solid var(--c-line);background:var(--c-surface);color:var(--c-brand-strong);border-radius:9px;padding:7px 10px;font:inherit;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap;}
+.citation-copy:hover{background:var(--c-brand-soft);}
+@media(max-width:560px){.citation-panel{padding:13px}.citation-row{grid-template-columns:1fr}.citation-copy{justify-self:start}.citation-panel-head{align-items:flex-start}}

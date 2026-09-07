@@ -43,6 +43,7 @@ const APP_SHELL = [
   './js/articles.js',
   './js/i18n.js',
   './js/library-common.js',
+  './js/citation.js',
   './js/library-data.js',
   './js/library-types.js',
   './js/library.js',

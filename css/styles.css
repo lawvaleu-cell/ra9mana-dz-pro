@@ -1713,3 +1713,9 @@ html[dir="rtl"] .compliance-prev-cta:hover svg{ transform: translateX(3px); }
   background: var(--c-surface);
 }
 .article-preview .article-title{ margin-top: var(--space-2); }
+
+
+/* PWA offline/synchronisation status */
+#pwa-sync-status[data-state="syncing"] { opacity: .8; }
+#pwa-sync-status[data-state="ok"] { opacity: .75; }
+#pwa-sync-status[data-state="offline"] { opacity: .9; }

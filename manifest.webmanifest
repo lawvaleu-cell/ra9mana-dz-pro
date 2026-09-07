@@ -1,0 +1,17 @@
+{
+  "name": "RA9MANA DZ — Bibliothèque juridique",
+  "short_name": "RA9MANA DZ",
+  "description": "Bibliothèque juridique et articles de RA9MANA DZ, disponibles hors ligne.",
+  "lang": "fr",
+  "dir": "ltr",
+  "start_url": "./library.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f172a",
+  "orientation": "portrait-primary",
+  "icons": [
+    {"src":"assets/pwa/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"},
+    {"src":"assets/pwa/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ]
+}

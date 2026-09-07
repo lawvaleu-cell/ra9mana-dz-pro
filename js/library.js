@@ -259,42 +259,29 @@
     const toggleBtn = document.getElementById("ref-toggle-pdf");
     if (toggleBtn) {
       toggleBtn.addEventListener("click", async () => {
-        const viewer = document.getElementById("ref-pdf-viewer");
-        const iframe = viewer.querySelector("iframe");
-        const isHidden = viewer.style.display === "none";
-
-        if (!isHidden) {
-          viewer.style.display = "none";
-          iframe.src = "";
-          if (activePdfObjectUrl) {
-            URL.revokeObjectURL(activePdfObjectUrl);
-            activePdfObjectUrl = "";
-          }
-          return;
-        }
-
-        viewer.style.display = "block";
         toggleBtn.disabled = true;
         const originalLabel = toggleBtn.querySelector("span");
+        const previousLabel = originalLabel ? originalLabel.textContent : readLabel;
         if (originalLabel) originalLabel.textContent = "…";
 
         try {
-          if (window.RA9MANA_OFFLINE?.getFileUrl) {
-            activePdfObjectUrl = await window.RA9MANA_OFFLINE.getFileUrl(ref.pdf);
-          } else if (navigator.onLine !== false) {
-            activePdfObjectUrl = ref.pdf;
-          }
-
-          if (!activePdfObjectUrl) {
-            viewer.style.display = "none";
-            alert("Ce document n’est pas encore disponible hors ligne. Ouvrez-le une fois avec Internet pour le synchroniser.");
+          if (window.RA9MANA_OFFLINE?.openFile) {
+            const opened = await window.RA9MANA_OFFLINE.openFile(ref.pdf);
+            if (!opened) {
+              alert("Ce document n’est pas encore disponible hors ligne. Ouvrez-le une fois avec Internet pour le synchroniser.");
+            }
             return;
           }
 
-          iframe.src = activePdfObjectUrl;
+          // Fallback if the offline helper is unavailable.
+          if (navigator.onLine !== false) {
+            location.assign(ref.pdf);
+          } else {
+            alert("Ce document n’est pas disponible hors ligne.");
+          }
         } finally {
           toggleBtn.disabled = false;
-          if (originalLabel) originalLabel.textContent = readLabel;
+          if (originalLabel) originalLabel.textContent = previousLabel;
         }
       });
     }

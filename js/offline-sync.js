@@ -74,6 +74,37 @@
     }
   }
 
+  async function openFile(path) {
+    if (!path) return false;
+    const absolute = resolveUrl(path);
+    if (!absolute.toLowerCase().includes('.pdf')) return false;
+
+    const cache = await openCache();
+    if (cache) {
+      const cached = await cache.match(absolute);
+      if (cached) {
+        const viewerUrl = new URL('__ra9mana-pdf', location.href);
+        viewerUrl.searchParams.set('src', absolute);
+        location.assign(viewerUrl.href);
+        return true;
+      }
+    }
+
+    if (!isOnline()) return false;
+
+    try {
+      const res = await fetch(absolute, { cache: 'no-store' });
+      if (!res.ok) return false;
+      if (cache) await cache.put(absolute, res.clone());
+      const viewerUrl = new URL('__ra9mana-pdf', location.href);
+      viewerUrl.searchParams.set('src', absolute);
+      location.assign(viewerUrl.href);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
   function setStatus(text, kind = '') {
     const el = document.getElementById('pwa-sync-status');
     if (!el) return;
@@ -124,6 +155,7 @@
 
   window.RA9MANA_OFFLINE = {
     getFileUrl,
+    openFile,
     resolveUrl,
     sync
   };

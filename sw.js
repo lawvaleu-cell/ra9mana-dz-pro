@@ -1,4 +1,4 @@
-const VERSION = 'ra9mana-pwa-v3';
+const VERSION = 'ra9mana-pwa-v4';
 const SHELL = `${VERSION}-shell`;
 const RUNTIME = `${VERSION}-runtime`;
 const DATA = `${VERSION}-data`;
@@ -105,9 +105,46 @@ async function cacheFirst(request, cacheName) {
   return response;
 }
 
+async function serveOfflinePdf(url) {
+  const source = url.searchParams.get('src');
+  if (!source) return new Response('Missing PDF source', { status: 400 });
+
+  let target;
+  try {
+    target = new URL(source, self.location.origin);
+  } catch (_) {
+    return new Response('Invalid PDF source', { status: 400 });
+  }
+
+  // Only allow PDFs from this same origin.
+  if (target.origin !== self.location.origin || !isPdf(target)) {
+    return new Response('Invalid PDF source', { status: 400 });
+  }
+
+  const cache = await caches.open(RUNTIME);
+  const cached = await cache.match(target.href);
+  if (cached) return cached;
+
+  try {
+    const response = await fetch(target.href);
+    if (response.ok) await cache.put(target.href, response.clone());
+    return response;
+  } catch (_) {
+    return new Response('This PDF is not available offline.', {
+      status: 503,
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+    });
+  }
+}
+
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   if (event.request.method !== 'GET' || url.origin !== self.location.origin) return;
+
+  if (url.pathname.endsWith('/__ra9mana-pdf')) {
+    event.respondWith(serveOfflinePdf(url));
+    return;
+  }
 
   if (isDataRequest(url)) {
     event.respondWith(networkFirst(event.request, DATA));

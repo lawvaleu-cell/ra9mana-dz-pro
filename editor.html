@@ -2,7 +2,7 @@
 <html lang="fr" dir="ltr">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>RA9MANA Legal Editor</title>
+<title>RA9MANA DZ — Éditeur juridique</title>
 <meta name="description" content="Éditeur de recherches juridiques RA9MANA DZ, avec références, tḥmīsh par page et bibliographie automatique.">
 <link rel="icon" type="image/png" href="assets/brand/logo.png"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f172a">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,12 +10,58 @@
 <link rel="stylesheet" href="css/styles.css"><link rel="stylesheet" href="css/editor.css">
 </head>
 <body class="editor-page">
-<header class="site-header" id="site-header"><div class="container">
-<a class="brand" href="index.html" aria-label="RA9MANA DZ"><img src="assets/brand/logo.png" alt="RA9MANA DZ"></a>
-<nav class="nav-links"><a href="index.html#solutions">Solutions</a><a href="library.html">Bibliothèque juridique</a><a href="articles.html">Articles</a><a class="is-editor-link" href="editor.html">✍️ Legal Editor</a></nav>
-<div class="nav-right"><div class="lang-switch"><button type="button" data-lang-btn="fr">FR</button><button type="button" data-lang-btn="en">EN</button><button type="button" data-lang-btn="ar">العربية</button></div><button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-menu">☰</button></div>
-</div></header>
-<div class="mobile-menu" id="mobile-menu"><div class="mobile-menu-top"><img src="assets/brand/logo.png" alt="RA9MANA DZ"><button id="mobile-menu-close" aria-label="Fermer">×</button></div><nav><a href="index.html#solutions">Solutions</a><a href="library.html">Bibliothèque juridique</a><a href="articles.html">Articles</a><a href="editor.html">✍️ Legal Editor</a></nav></div>
+<header class="site-header" id="site-header">
+  <div class="container">
+    <a class="brand" href="index.html" aria-label="RA9MANA DZ">
+      <img src="assets/brand/logo.png" alt="RA9MANA DZ">
+    </a>
+
+    <nav class="nav-links" aria-label="Navigation principale">
+      <a href="index.html#solutions" data-i18n="nav.solutions">Solutions</a>
+      <a href="index.html#products" data-i18n="nav.produits">Produits</a>
+      <a href="library.html" data-i18n="nav.library">Bibliothèque juridique</a>
+      <a href="compliance/index.html" data-i18n="nav.compliance">Évaluation de conformité</a>
+      <a href="index.html#contact" data-i18n="nav.contact">Contact</a>
+    </nav>
+
+    <div class="nav-right">
+      <div class="lang-switch" role="group" aria-label="Choix de la langue">
+        <button type="button" data-lang-btn="fr" aria-pressed="true">FR</button>
+        <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
+        <button type="button" data-lang-btn="ar" aria-pressed="false">العربية</button>
+      </div>
+      <a class="btn btn-primary btn-sm nav-cta" href="submit.html" data-i18n="library.ctaContribute">Enrichir la bibliothèque</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu" data-i18n-aria="nav.menuOpen" aria-expanded="false" aria-controls="mobile-menu">
+        <svg><use href="assets/icons/icons.svg#icon-menu"></use></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobile-menu">
+  <div class="mobile-menu-top">
+    <img src="assets/brand/logo.png" alt="RA9MANA DZ">
+    <button id="mobile-menu-close" aria-label="Fermer le menu" data-i18n-aria="nav.menuClose">
+      <svg><use href="assets/icons/icons.svg#icon-close"></use></svg>
+    </button>
+  </div>
+  <nav>
+    <a href="index.html#solutions" data-i18n="nav.solutions">Solutions</a>
+    <a href="index.html#products" data-i18n="nav.produits">Produits</a>
+    <a href="library.html" data-i18n="nav.library">Bibliothèque juridique</a>
+    <a href="compliance/index.html" data-i18n="nav.compliance">Évaluation de conformité</a>
+    <a href="index.html#contact" data-i18n="nav.contact">Contact</a>
+  </nav>
+  <div class="mobile-menu-foot">
+    <div class="lang-switch" role="group" aria-label="Choix de la langue">
+      <button type="button" data-lang-btn="fr" aria-pressed="true">FR</button>
+      <button type="button" data-lang-btn="en" aria-pressed="false">EN</button>
+      <button type="button" data-lang-btn="ar" aria-pressed="false">العربية</button>
+    </div>
+    <a class="btn btn-on-dark btn-block" href="submit.html" data-i18n="library.ctaContribute">Enrichir la bibliothèque</a>
+  </div>
+</div>
+
 <main>
 <section class="editor-hero"><div class="container editor-hero-inner"><div><div class="eyebrow">RA9MANA TOOL</div><h1>Legal Editor</h1><p>Écrivez comme dans un traitement de texte. Ajoutez vos références depuis la bibliothèque, créez vos notes de bas de page et générez la bibliographie automatiquement.</p></div><div class="editor-hero-actions"><button class="btn btn-primary" id="new-project">＋ Nouveau projet</button><button class="btn btn-ghost" id="open-project">📂 Mes projets</button></div></div></section>
 <section class="editor-workspace"><div class="container">
@@ -31,5 +77,14 @@
 </main>
 <div class="editor-modal" id="editor-modal" aria-hidden="true"><div class="editor-modal-card"><button class="modal-close" data-close-editor-modal>×</button><div id="modal-content"></div></div></div>
 <div class="toast" id="toast" aria-live="polite"><div class="toast-inner"></div></div>
-<script src="js/locales.js"></script><script src="js/i18n.js"></script><script src="js/citation.js"></script><script src="js/editor.js"></script><script src="js/pwa.js?v=7"></script>
+<script src="js/products.js"></script>
+<script src="js/locales.js"></script>
+<script src="compliance/i18n-extend.js"></script>
+<script src="js/articles-i18n-extend.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/citation.js"></script>
+<script src="js/simple-header.js"></script>
+<script src="js/editor.js"></script>
+<script src="js/editor-i18n.js?v=2"></script>
+<script src="js/pwa.js?v=8"></script>
 </body></html>

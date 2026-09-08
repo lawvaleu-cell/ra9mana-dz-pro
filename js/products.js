@@ -17,17 +17,17 @@ const RA9MANA_PRODUCTS = [
     id: "legal-editor",
     category: "business",
     status: "live",
-    icon: "book",
-    name: { fr: "RA9MANA Legal Editor", en: "RA9MANA Legal Editor", ar: "RA9MANA Legal Editor" },
+    icon: "business",
+    name: { fr: "Éditeur juridique", en: "Legal Editor", ar: "المحرر القانوني" },
     description: {
-      fr: "Un éditeur de recherche juridique avec références de la bibliothèque, notes de bas de page par page et bibliographie automatique.",
-      en: "A legal research editor with library references, page-level footnotes and automatic bibliography.",
-      ar: "محرر للبحوث القانونية يدمج مراجع المكتبة والتهميش حسب الصفحة وقائمة المراجع تلقائيًا."
+      fr: "Un espace de rédaction juridique avec références depuis la bibliothèque, tḥmīsh par page et bibliographie automatique.",
+      en: "A legal writing workspace with library references, page footnotes and automatic bibliography.",
+      ar: "مساحة متكاملة للبحث القانوني مع مراجع من المكتبة وتهميش حسب الصفحة وقائمة مراجع تلقائية."
     },
     benefit: {
-      fr: "Écrivez normalement, puis laissez l’éditeur gérer les références et le tḥmīsh.",
-      en: "Write normally, then let the editor handle citations, footnotes and bibliography.",
-      ar: "اكتب بحثك بشكل طبيعي ودع المحرر يتولى المراجع والتهميش وقائمة المصادر."
+      fr: "Rédigez votre recherche sans quitter l’écosystème RA9MANA.",
+      en: "Write your research without leaving the RA9MANA ecosystem.",
+      ar: "اكتب بحثك دون مغادرة منظومة RA9MANA."
     },
     image: "assets/products/legal-editor.svg",
     url: "editor.html"

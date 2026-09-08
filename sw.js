@@ -1,9 +1,14 @@
-const VERSION = 'ra9mana-pwa-v7';
+const VERSION = 'ra9mana-pwa-v8';
 const SHELL = `${VERSION}-shell`;
 const RUNTIME = `${VERSION}-runtime`;
 const DATA = `${VERSION}-data`;
 
 const APP_SHELL = [
+  './editor.html',
+  './css/editor.css',
+  './js/editor.js',
+  './js/editor-i18n.js',
+  './assets/products/legal-editor.svg',
   './admin.html',
   './articles.html',
   './assets/brand/logo.png',
@@ -16,7 +21,6 @@ const APP_SHELL = [
   './assets/products/education.svg',
   './assets/products/medical.svg',
   './assets/products/restaurant.svg',
-  './assets/products/legal-editor.svg',
   './assets/pwa/icon-192.png',
   './assets/pwa/icon-512.png',
   './assets/ra9mon/ra9mon.png',
@@ -33,18 +37,15 @@ const APP_SHELL = [
   './compliance/verify.js',
   './covers/REF-2026-00003.png',
   './css/styles.css',
-  './css/editor.css',
   './data/articles.json',
   './data/library.json',
   './index.html',
-  './editor.html',
   './js/admin.js',
   './js/article-form.js',
   './js/articles-common.js',
   './js/articles-data.js',
   './js/articles-i18n-extend.js',
   './js/articles.js',
-  './js/editor.js',
   './js/i18n.js',
   './js/library-common.js',
   './js/citation.js',

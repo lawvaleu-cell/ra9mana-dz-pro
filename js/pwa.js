@@ -229,7 +229,7 @@
     try { const r = await fetch('data/library.json', {cache:'no-store'}); refs = r.ok ? await r.json() : []; } catch(_) {}
     try { const r = await fetch('data/articles.json', {cache:'no-store'}); articles = r.ok ? await r.json() : []; } catch(_) {}
     refs = Array.isArray(refs) ? refs.filter(x=>x && x.status !== 'draft') : [];
-    articles = Array.isArray(articles) ? articles.filter(x=>x && x.status === 'published') : [];
+    articles = Array.isArray(articles) ? articles.filter(x=>x && x.status !== 'draft') : [];
     const l=lang(), esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
     const label = x => x.typeLabel || x.type || (l==='ar'?'مرجع':l==='en'?'Reference':'Référence');
     const groups = [...new Map(refs.map(r=>[String(r.type||'other'), {id:String(r.type||'other'), label:label(r)}])).values()];
@@ -243,12 +243,12 @@
     };
     const showArticles = () => {
       back.hidden=false; back.onclick=showHome;
-      content.innerHTML=`<p class="ra9mon-question">${l==='ar'?'لدينا هذه المقالات:':l==='en'?'Here are the available articles:':'Voici les articles disponibles :'}</p><div class="ra9mon-result-list">${articles.slice(0,30).map(a=>`<a href="articles.html#article-${encodeURIComponent(a.id)}"><b>${esc(a.title)}</b><small>${esc(a.category||'')}</small></a>`).join('')}</div>`;
+      content.innerHTML=`<p class="ra9mon-question">${l==='ar'?'لدينا هذه المقالات:':l==='en'?'Here are the available articles:':'Voici les articles disponibles :'}</p><div class="ra9mon-result-list">${articles.slice(0,30).map(a=>`<a href="articles.html?article=${encodeURIComponent(a.id)}"><b>${esc(a.title)}</b><small>${esc(a.category||'')}</small></a>`).join('')}</div>`;
     };
     const showRefs = type => {
       back.hidden=false; back.onclick=showTypes;
       const list=refs.filter(r=>String(r.type||'other')===type);
-      content.innerHTML=`<p class="ra9mon-question">${l==='ar'?'أوه نعم! لدينا عدة مراجع من هذا النوع. اختر المرجع:':l==='en'?'Oh yes! We have several references of this type. Choose one:':'Oh oui ! Nous avons plusieurs références de ce type. Choisissez-en une :'}</p><div class="ra9mon-result-list">${list.slice(0,40).map(r=>`<a href="library.html#ref-${encodeURIComponent(r.id)}"><b>${esc(r.title)}</b><small>${esc(r.category||'')} ${r.year?`· ${esc(r.year)}`:''}</small></a>`).join('')}</div>`;
+      content.innerHTML=`<p class="ra9mon-question">${l==='ar'?'أوه نعم! لدينا عدة مراجع من هذا النوع. اختر المرجع:':l==='en'?'Oh yes! We have several references of this type. Choose one:':'Oh oui ! Nous avons plusieurs références de ce type. Choisissez-en une :'}</p><div class="ra9mon-result-list">${list.slice(0,40).map(r=>`<a href="library.html?ref=${encodeURIComponent(r.id)}"><b>${esc(r.title)}</b><small>${esc(r.category||'')} ${r.year?`· ${esc(r.year)}`:''}</small></a>`).join('')}</div>`;
     };
     content.addEventListener('click', e=>{ const k=e.target.closest('[data-explore-kind]'); const rt=e.target.closest('[data-ref-type]'); if(k){k.dataset.exploreKind==='refs'?showTypes():showArticles();} if(rt) showRefs(rt.dataset.refType); });
     showHome();

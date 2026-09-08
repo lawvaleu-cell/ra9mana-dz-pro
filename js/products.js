@@ -14,6 +14,25 @@
 
 const RA9MANA_PRODUCTS = [
   {
+    id: "legal-editor",
+    category: "business",
+    status: "live",
+    icon: "book",
+    name: { fr: "RA9MANA Legal Editor", en: "RA9MANA Legal Editor", ar: "RA9MANA Legal Editor" },
+    description: {
+      fr: "Un éditeur de recherche juridique avec références de la bibliothèque, notes de bas de page par page et bibliographie automatique.",
+      en: "A legal research editor with library references, page-level footnotes and automatic bibliography.",
+      ar: "محرر للبحوث القانونية يدمج مراجع المكتبة والتهميش حسب الصفحة وقائمة المراجع تلقائيًا."
+    },
+    benefit: {
+      fr: "Écrivez normalement, puis laissez l’éditeur gérer les références et le tḥmīsh.",
+      en: "Write normally, then let the editor handle citations, footnotes and bibliography.",
+      ar: "اكتب بحثك بشكل طبيعي ودع المحرر يتولى المراجع والتهميش وقائمة المصادر."
+    },
+    image: "assets/products/legal-editor.svg",
+    url: "editor.html"
+  },
+  {
     id: "clinic-manager",
     category: "medical",
     status: "live",

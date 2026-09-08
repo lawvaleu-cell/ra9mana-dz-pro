@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>RA9MANA Legal Editor</title>
+<meta name="description" content="Éditeur de recherches juridiques RA9MANA DZ, avec références, tḥmīsh par page et bibliographie automatique.">
+<link rel="icon" type="image/png" href="assets/brand/logo.png"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0f172a">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css"><link rel="stylesheet" href="css/editor.css">
+</head>
+<body class="editor-page">
+<header class="site-header" id="site-header"><div class="container">
+<a class="brand" href="index.html" aria-label="RA9MANA DZ"><img src="assets/brand/logo.png" alt="RA9MANA DZ"></a>
+<nav class="nav-links"><a href="index.html#solutions">Solutions</a><a href="library.html">Bibliothèque juridique</a><a href="articles.html">Articles</a><a class="is-editor-link" href="editor.html">✍️ Legal Editor</a></nav>
+<div class="nav-right"><div class="lang-switch"><button type="button" data-lang-btn="fr">FR</button><button type="button" data-lang-btn="en">EN</button><button type="button" data-lang-btn="ar">العربية</button></div><button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-menu">☰</button></div>
+</div></header>
+<div class="mobile-menu" id="mobile-menu"><div class="mobile-menu-top"><img src="assets/brand/logo.png" alt="RA9MANA DZ"><button id="mobile-menu-close" aria-label="Fermer">×</button></div><nav><a href="index.html#solutions">Solutions</a><a href="library.html">Bibliothèque juridique</a><a href="articles.html">Articles</a><a href="editor.html">✍️ Legal Editor</a></nav></div>
+<main>
+<section class="editor-hero"><div class="container editor-hero-inner"><div><div class="eyebrow">RA9MANA TOOL</div><h1>Legal Editor</h1><p>Écrivez comme dans un traitement de texte. Ajoutez vos références depuis la bibliothèque, créez vos notes de bas de page et générez la bibliographie automatiquement.</p></div><div class="editor-hero-actions"><button class="btn btn-primary" id="new-project">＋ Nouveau projet</button><button class="btn btn-ghost" id="open-project">📂 Mes projets</button></div></div></section>
+<section class="editor-workspace"><div class="container">
+<div class="editor-app" id="editor-app">
+<div class="editor-topbar"><div class="project-title-wrap"><input id="project-title" value="Nouveau travail juridique" aria-label="Titre du projet"><span id="save-status">Enregistré localement</span></div><div class="editor-top-actions"><button class="tool-btn" id="export-project">⬇ Projet</button><button class="tool-btn" id="import-project">⬆ Importer</button><input type="file" id="project-file" accept=".json,.ra9mana" hidden><button class="tool-btn" id="print-document">🖨 Imprimer / PDF</button><button class="tool-btn" id="export-word">📄 Word</button><button class="btn btn-primary btn-sm" id="ask-ramon">🤖 رقمون</button></div></div>
+<div class="editor-toolbar" role="toolbar">
+<select id="block-style" title="Style"><option value="p">Texte</option><option value="h1">Titre 1</option><option value="h2">Titre 2</option><option value="h3">Titre 3</option><option value="blockquote">Citation</option></select>
+<button data-cmd="bold"><b>B</b></button><button data-cmd="italic"><i>I</i></button><button data-cmd="underline"><u>U</u></button><span class="toolbar-sep"></span><button data-cmd="justifyLeft">☰</button><button data-cmd="justifyCenter">≡</button><button data-cmd="justifyRight">☷</button><span class="toolbar-sep"></span><button data-cmd="insertUnorderedList">• Liste</button><button data-cmd="insertOrderedList">1. Liste</button><button data-cmd="createLink">🔗</button><span class="toolbar-sep"></span><button class="special-tool" id="add-reference">📚 Référence</button><button class="special-tool" id="add-footnote">¹ Tḥmīsh</button><button class="special-tool" id="show-bibliography">📖 Bibliographie</button><button id="add-page">＋ Page</button></div>
+<div class="editor-layout"><aside class="editor-sidebar"><div class="sidebar-head"><b>Projet</b><button id="close-sidebar" title="Fermer">×</button></div><button class="side-action" id="sidebar-add-ref">📚 Ajouter une référence</button><button class="side-action" id="sidebar-footnote">¹ Ajouter un tḥmīsh</button><button class="side-action" id="sidebar-bib">📖 Voir la bibliographie</button><div class="sidebar-box"><b>Conseil de رقمون</b><p id="ramon-tip">Ajoutez une référence depuis la bibliothèque plutôt que de la retaper.</p></div><div class="sidebar-box"><b>Stockage</b><p>Ce document reste sur cet appareil. Aucun serveur n'est nécessaire.</p></div></aside>
+<div class="pages-scroll" id="pages-scroll"><div id="pages"></div></div></div>
+<div class="editor-bottom"><span id="word-count">0 mots</span><span id="page-count">1 page</span><span id="footnote-count">0 tḥmīsh</span><span class="editor-offline">● Offline ready</span></div>
+</div></div></section>
+</main>
+<div class="editor-modal" id="editor-modal" aria-hidden="true"><div class="editor-modal-card"><button class="modal-close" data-close-editor-modal>×</button><div id="modal-content"></div></div></div>
+<div class="toast" id="toast" aria-live="polite"><div class="toast-inner"></div></div>
+<script src="js/locales.js"></script><script src="js/i18n.js"></script><script src="js/citation.js"></script><script src="js/editor.js"></script><script src="js/pwa.js?v=7"></script>
+</body></html>

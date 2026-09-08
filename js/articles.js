@@ -70,22 +70,57 @@
     } catch (e) { return dateStr; }
   }
 
+  function shareArticle(article) {
+    const url = new URL(`articles.html?article=${encodeURIComponent(article.id)}`, location.href).href;
+    const title = article.title || "RA9MANA DZ";
+    const text = article.title || "";
+    if (navigator.share) navigator.share({ title, text, url }).catch(() => {});
+    else copyText(url, "share");
+  }
+
+  async function copyText(text, kind) {
+    try { await navigator.clipboard.writeText(text); }
+    catch (_) {
+      const ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); } catch (e) {} ta.remove();
+    }
+    const el = document.querySelector(`[data-action="${kind}"]`);
+    if (el) { const old = el.innerHTML; el.textContent = langText("copied"); setTimeout(() => { el.innerHTML = old; }, 1300); }
+  }
+
+  function langText(key) {
+    const l = RA9MANA_I18N.getLang();
+    return ({
+      copied: l === "ar" ? "تم النسخ ✓" : l === "en" ? "Copied ✓" : "Copié ✓",
+      copy: l === "ar" ? "نسخ المقال" : l === "en" ? "Copy article" : "Copier l’article",
+      share: l === "ar" ? "مشاركة" : l === "en" ? "Share" : "Partager",
+      read: l === "ar" ? "قراءة المقال" : l === "en" ? "Read article" : "Lire l’article"
+    })[key];
+  }
+
   function articleHtml(article) {
     const c = article.content || {};
     const sIntro = RA9MANA_I18N.t("articles.sections.introduction") || "Introduction";
     const sBody = RA9MANA_I18N.t("articles.sections.body") || "Body";
     const sConclusion = RA9MANA_I18N.t("articles.sections.conclusion") || "Conclusion";
     const metaLine = [formatDate(article.date), article.category].filter(Boolean).join(" &middot; ");
-
+    const plain = [c.introduction, c.body, c.conclusion].filter(Boolean).join("\n\n");
     return `
-      <article class="article-entry" data-article-id="${RA9MANA_ARTICLES.esc(article.id)}">
-        ${authorBlock(article.author)}
-        <div class="article-author-meta" style="justify-content:center; margin: -6px 0 var(--space-3)">${metaLine}</div>
+      <article class="article-entry article-card reveal" data-article-id="${RA9MANA_ARTICLES.esc(article.id)}">
+        <div class="article-card-top">
+          <div>${authorBlock(article.author)}</div>
+          <div class="article-card-meta">${metaLine}</div>
+        </div>
         <h2 class="article-title">${RA9MANA_ARTICLES.esc(article.title)}</h2>
+        ${article.description ? `<p class="article-excerpt">${RA9MANA_ARTICLES.esc(article.description)}</p>` : ""}
         <div class="article-content">
           ${c.introduction ? `<div class="article-section-label">${RA9MANA_ARTICLES.esc(sIntro)}</div>${RA9MANA_ARTICLES.renderRich(c.introduction)}` : ""}
           ${c.body ? `<div class="article-section-label">${RA9MANA_ARTICLES.esc(sBody)}</div>${RA9MANA_ARTICLES.renderRich(c.body)}` : ""}
           ${c.conclusion ? `<div class="article-section-label">${RA9MANA_ARTICLES.esc(sConclusion)}</div>${RA9MANA_ARTICLES.renderRich(c.conclusion)}` : ""}
+        </div>
+        <div class="article-card-actions">
+          <button type="button" class="btn btn-ghost article-copy-btn" data-copy-article="${RA9MANA_ARTICLES.esc(article.id)}"><span>⧉</span> ${langText("copy")}</button>
+          <button type="button" class="btn btn-ghost article-share-btn" data-share-article="${RA9MANA_ARTICLES.esc(article.id)}"><span>↗</span> ${langText("share")}</button>
         </div>
       </article>`;
   }
@@ -119,6 +154,14 @@
     render();
   }
 
+  function openSharedArticle() {
+    const params = new URLSearchParams(location.search);
+    const id = params.get("article");
+    if (!id) return;
+    const el = document.querySelector(`[data-article-id="${CSS.escape(id)}"]`);
+    if (el) { el.scrollIntoView({ behavior: "smooth", block: "start" }); el.classList.add("shared-highlight"); setTimeout(() => el.classList.remove("shared-highlight"), 1800); }
+  }
+
   let observer = null;
   function observeReveals() {
     if (!("IntersectionObserver" in window)) {
@@ -145,6 +188,18 @@
       searchDebounce = setTimeout(() => { state.query = els.search.value; recompute(); }, 220);
     });
 
+    els.feed.addEventListener("click", (e) => {
+      const copy = e.target.closest("[data-copy-article]");
+      const share = e.target.closest("[data-share-article]");
+      if (!copy && !share) return;
+      const id = (copy || share).getAttribute(copy ? "data-copy-article" : "data-share-article");
+      const article = ALL.find(a => a.id === id);
+      if (!article) return;
+      if (share) { shareArticle(article); return; }
+      const c = article.content || {};
+      copyText([article.title, article.author && article.author.name, c.introduction, c.body, c.conclusion].filter(Boolean).join("\n\n"), "copy");
+    });
+
     els.categoryChips.addEventListener("click", (e) => {
       const btn = e.target.closest("[data-category]");
       if (!btn) return;
@@ -168,5 +223,6 @@
     ALL = await RA9MANA_ARTICLES.loadPublished();
     populateCategories(ALL);
     recompute();
+    requestAnimationFrame(openSharedArticle);
   });
 })();

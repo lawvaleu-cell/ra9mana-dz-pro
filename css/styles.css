@@ -1844,3 +1844,41 @@ html[dir="rtl"] .ra9mon-hint{right:auto;left:72px;}
 .citation-copy{border:1px solid var(--c-line);background:var(--c-surface);color:var(--c-brand-strong);border-radius:9px;padding:7px 10px;font:inherit;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap;}
 .citation-copy:hover{background:var(--c-brand-soft);}
 @media(max-width:560px){.citation-panel{padding:13px}.citation-row{grid-template-columns:1fr}.citation-copy{justify-self:start}.citation-panel-head{align-items:flex-start}}
+
+
+/* =========================================================
+   Library / Articles visual refinement — keeps the existing RA9MANA design
+   ========================================================= */
+.library-subnav{display:inline-flex;gap:0;margin-top:var(--space-2);padding:4px;border:1px solid var(--c-line);border-radius:14px;background:rgba(255,255,255,.7);box-shadow:var(--shadow-card)}
+.library-subnav .filter-chip{border:0;border-radius:10px;margin:0}
+.article-feed{gap:18px}
+.article-entry.article-card{padding:0;border:1px solid var(--c-line);border-radius:var(--radius-m);background:var(--c-surface-raised);box-shadow:var(--shadow-card);overflow:hidden;transition:transform .25s var(--ease),box-shadow .25s var(--ease),border-color .25s var(--ease)}
+.article-entry.article-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-pop);border-color:rgba(0,207,214,.35)}
+.article-card-top{padding:18px 20px 0;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.article-card-meta{font-size:.78rem;color:var(--c-text-muted);text-align:end}
+.article-entry.article-card .article-title{padding-inline:20px;margin-top:8px}
+.article-excerpt{padding:0 20px;color:var(--c-text-muted);line-height:1.7}
+.article-entry.article-card .article-content{padding:0 20px 18px}
+.article-card-actions{display:flex;gap:8px;padding:14px 20px;border-top:1px solid var(--c-line);background:var(--c-surface)}
+.article-card-actions .btn{font-size:.8rem;padding:9px 13px}
+.ref-share-btn{width:34px;height:34px;border:1px solid var(--c-line);border-radius:10px;background:var(--c-surface);color:var(--c-text-muted);display:grid;place-items:center;cursor:pointer;transition:.2s}
+.ref-share-btn:hover{color:var(--c-brand-strong);border-color:var(--c-brand-strong);background:var(--c-brand-soft);transform:translateY(-1px)}
+.ra9mon-explorer{margin-top:14px;border-top:1px solid var(--c-line);padding-top:14px}
+.ra9mon-explorer[hidden]{display:none}
+.ra9mon-explorer-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.ra9mon-explorer-head strong{font-family:var(--font-display);color:var(--c-ink);font-size:.9rem}
+.ra9mon-back{border:0;background:transparent;color:var(--c-brand-strong);font-weight:700;cursor:pointer;font-size:.76rem}
+.ra9mon-question{margin:0 0 10px;color:var(--c-text-muted);font-size:.8rem;line-height:1.55}
+.ra9mon-choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ra9mon-choice-grid button{border:1px solid var(--c-line);background:var(--c-surface);border-radius:12px;padding:11px;text-align:start;color:var(--c-ink);cursor:pointer;transition:.2s}
+.ra9mon-choice-grid button:hover{border-color:var(--c-brand-strong);background:var(--c-brand-soft);transform:translateY(-1px)}
+.ra9mon-choice-grid b,.ra9mon-result-list b{display:block;font-size:.78rem}
+.ra9mon-choice-grid small,.ra9mon-result-list small{display:block;color:var(--c-text-muted);font-size:.68rem;margin-top:3px;line-height:1.4}
+.ra9mon-result-list{display:flex;flex-direction:column;gap:7px;max-height:245px;overflow:auto}
+.ra9mon-result-list a{display:block;padding:10px 11px;border:1px solid var(--c-line);border-radius:11px;background:var(--c-surface);color:var(--c-ink);text-decoration:none}
+.ra9mon-result-list a:hover{border-color:var(--c-brand-strong);background:var(--c-brand-soft)}
+.ra9mon-loading{color:var(--c-text-muted)}
+@media(max-width:620px){.article-card-top{align-items:flex-start;flex-direction:column}.article-card-meta{text-align:start}.article-card-actions{flex-wrap:wrap}.article-card-actions .btn{flex:1}.ra9mon-choice-grid{grid-template-columns:1fr}}
+
+.article-card.shared-highlight{animation:article-shared .9s ease 2;}
+@keyframes article-shared{50%{box-shadow:0 0 0 4px rgba(0,207,214,.18),var(--shadow-pop)}}

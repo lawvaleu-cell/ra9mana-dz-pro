@@ -93,6 +93,7 @@
       : `<span class="ref-cover-fallback">${RA9MANA_LIBRARY.esc((ref.title || "?").trim().charAt(0))}</span>`;
     const readLabel = RA9MANA_I18N.t("library.card.read") || "Read";
     const noFileLabel = RA9MANA_I18N.t("library.card.noFile") || "";
+    const shareLabel = lang === "ar" ? "مشاركة المرجع" : lang === "en" ? "Share reference" : "Partager";
     return `
       <article class="ref-card reveal" data-ref-id="${RA9MANA_LIBRARY.esc(ref.id)}" role="button" tabindex="0">
         <div class="ref-cover">
@@ -110,6 +111,7 @@
               <span class="ref-icon-btn" title="${RA9MANA_LIBRARY.esc(ref.pdf ? readLabel : noFileLabel)}" ${ref.pdf ? "" : "aria-disabled=\"true\""}>
                 <svg><use href="assets/icons/icons.svg#icon-${ref.pdf ? "eye" : "book"}"></use></svg>
               </span>
+              <button type="button" class="ref-share-btn" data-share-ref="${RA9MANA_LIBRARY.esc(ref.id)}" title="${RA9MANA_LIBRARY.esc(shareLabel)}" aria-label="${RA9MANA_LIBRARY.esc(shareLabel)}">↗</button>
             </div>
           </div>
         </div>
@@ -167,6 +169,15 @@
       }, { threshold: 0.1, rootMargin: "0px 0px -30px 0px" });
     }
     document.querySelectorAll(".reveal:not(.is-visible)").forEach((el) => observer.observe(el));
+  }
+
+  async function shareReference(ref) {
+    const url = new URL(`library.html#ref-${encodeURIComponent(ref.id)}`, location.href).href;
+    const title = ref.title || "RA9MANA DZ";
+    if (navigator.share) { try { await navigator.share({ title, text: title, url }); } catch (_) {} return; }
+    try { await navigator.clipboard.writeText(url); } catch (_) {
+      const ta=document.createElement("textarea"); ta.value=url; ta.style.position="fixed"; ta.style.opacity="0"; document.body.appendChild(ta); ta.select(); try{document.execCommand("copy")}catch(e){} ta.remove();
+    }
   }
 
   /* ---------------------------------------------------------
@@ -263,6 +274,7 @@
           ${ref.pdf
             ? `<button type="button" class="btn btn-primary btn-sm" id="ref-toggle-pdf"><span>${RA9MANA_LIBRARY.esc(readLabel)}</span><svg><use href="assets/icons/icons.svg#icon-eye"></use></svg></button>`
             : `<span class="btn btn-ghost btn-sm" aria-disabled="true" style="opacity:.6">${RA9MANA_LIBRARY.esc(noFileLabel)}</span>`}
+          <button type="button" class="btn btn-ghost btn-sm" id="ref-share-modal">↗ ${lang === "ar" ? "مشاركة المرجع" : lang === "en" ? "Share reference" : "Partager"}</button>
         </div>
         <div class="ref-pdf-viewer" id="ref-pdf-viewer" style="display:none">
           <iframe src="" title="PDF" loading="lazy"></iframe>
@@ -270,6 +282,9 @@
         ${contributorBlock(ref)}
       </div>
     `;
+
+    const shareModalBtn = document.getElementById("ref-share-modal");
+    if (shareModalBtn) shareModalBtn.addEventListener("click", () => shareReference(ref));
 
     const toggleBtn = document.getElementById("ref-toggle-pdf");
     if (toggleBtn) {
@@ -351,6 +366,13 @@
   --------------------------------------------------------- */
   let searchDebounce = null;
   function bindEvents() {
+    els.grid.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-share-ref]");
+      if (!btn) return;
+      e.stopPropagation();
+      const ref = ALL.find(r => r.id === btn.getAttribute("data-share-ref"));
+      if (ref) shareReference(ref);
+    });
     els.search.addEventListener("input", () => {
       clearTimeout(searchDebounce);
       searchDebounce = setTimeout(() => { state.query = els.search.value; recompute(); }, 220);

@@ -20,6 +20,9 @@
       botIntro: 'Ton ami dans le monde numérique. Je peux te guider vers la bibliothèque, les articles et l’installation de RA9MANA DZ.',
       botLibrary: 'Ouvrir la bibliothèque',
       botArticles: 'Voir les articles',
+      botExplore: 'Explorer les contenus',
+      botBack: 'Retour',
+      botCount: 'contenus disponibles',
       botInstall: 'Installer le site',
       botClose: 'Fermer',
       botHint: 'Besoin d’un coup de main ?',
@@ -39,6 +42,9 @@
       botIntro: 'Your friend in the digital world. I can guide you to the library, articles and the RA9MANA DZ installation.',
       botLibrary: 'Open the library',
       botArticles: 'View articles',
+      botExplore: 'Explore content',
+      botBack: 'Back',
+      botCount: 'available items',
       botInstall: 'Install the site',
       botClose: 'Close',
       botHint: 'Need a hand?',
@@ -58,6 +64,9 @@
       botIntro: 'صديقك في العالم الرقمي. أساعدك في الوصول إلى المكتبة والمقالات وتثبيت رقمانة DZ على جهازك.',
       botLibrary: 'افتح المكتبة',
       botArticles: 'شاهد المقالات',
+      botExplore: 'استكشف المحتوى',
+      botBack: 'رجوع',
+      botCount: 'محتوى متاح',
       botInstall: 'حمّل الموقع كتطبيق',
       botClose: 'إغلاق',
       botHint: 'تحتاج إلى مساعدة؟',
@@ -178,10 +187,10 @@
         <p class="ra9mon-greeting"></p>
         <p class="ra9mon-intro"></p>
         <div class="ra9mon-actions">
-          <a class="ra9mon-action" href="library.html"><span>⚖</span><span class="ra9mon-library"></span></a>
-          <a class="ra9mon-action" href="articles.html"><span>▤</span><span class="ra9mon-articles"></span></a>
+          <button type="button" class="ra9mon-action ra9mon-explore-action"><span>✦</span><span class="ra9mon-explore"></span></button>
           <button type="button" class="ra9mon-action ra9mon-install-action"><span>${makeDownloadIcon()}</span><span class="ra9mon-install"></span></button>
         </div>
+        <div class="ra9mon-explorer" hidden></div>
       </div>
       <button type="button" class="ra9mon-launch" aria-expanded="false" aria-label="RA9MON">
         <img src="assets/ra9mon/ra9mon.png" alt="RA9MON">
@@ -203,8 +212,46 @@
     launcher.addEventListener('click', toggle);
     close.addEventListener('click', toggle);
     widget.querySelector('.ra9mon-install-action').addEventListener('click', requestInstall);
+    widget.querySelector('.ra9mon-explore-action').addEventListener('click', () => openExplorer(widget));
 
     updateRobotText();
+  }
+
+  async function openExplorer(widget) {
+    const box = widget.querySelector('.ra9mon-explorer');
+    const actions = widget.querySelector('.ra9mon-actions');
+    if (!box) return;
+    box.hidden = false; actions.hidden = true;
+    box.innerHTML = `<div class="ra9mon-explorer-head"><strong>${t('botExplore')}</strong><button type="button" class="ra9mon-back" hidden>${t('botBack')}</button></div><div class="ra9mon-explorer-content"><span class="ra9mon-loading">…</span></div>`;
+    const content = box.querySelector('.ra9mon-explorer-content');
+    const back = box.querySelector('.ra9mon-back');
+    let refs = [], articles = [];
+    try { const r = await fetch('data/library.json', {cache:'no-store'}); refs = r.ok ? await r.json() : []; } catch(_) {}
+    try { const r = await fetch('data/articles.json', {cache:'no-store'}); articles = r.ok ? await r.json() : []; } catch(_) {}
+    refs = Array.isArray(refs) ? refs.filter(x=>x && x.status !== 'draft') : [];
+    articles = Array.isArray(articles) ? articles.filter(x=>x && x.status === 'published') : [];
+    const l=lang(), esc=v=>String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+    const label = x => x.typeLabel || x.type || (l==='ar'?'مرجع':l==='en'?'Reference':'Référence');
+    const groups = [...new Map(refs.map(r=>[String(r.type||'other'), {id:String(r.type||'other'), label:label(r)}])).values()];
+    const showHome = () => {
+      back.hidden=true;
+      content.innerHTML = `<p class="ra9mon-question">${l==='ar'?'ماذا تريد أن تفتح؟':l==='en'?'What would you like to explore?':'Que voulez-vous explorer ?'}</p><div class="ra9mon-choice-grid"><button data-explore-kind="refs">⚖️ <b>${l==='ar'?'المراجع':l==='en'?'References':'Références'}</b><small>${refs.length} ${t('botCount')}</small></button><button data-explore-kind="articles">📰 <b>${l==='ar'?'المقالات':l==='en'?'Articles':'Articles'}</b><small>${articles.length} ${t('botCount')}</small></button></div>`;
+    };
+    const showTypes = () => {
+      back.hidden=false; back.onclick=showHome;
+      content.innerHTML = `<p class="ra9mon-question">${l==='ar'?'أوه! لدينا الكثير 😎 اختر نوع المرجع:':l==='en'?'Oh! We have plenty 😎 Choose a reference type:':'Oh ! Nous en avons beaucoup 😎 Choisissez un type :'}</p><div class="ra9mon-choice-grid">${groups.map(g=>`<button data-ref-type="${esc(g.id)}"><b>${esc(g.label)}</b><small>${refs.filter(r=>String(r.type||'other')===g.id).length} ${t('botCount')}</small></button>`).join('')}</div>`;
+    };
+    const showArticles = () => {
+      back.hidden=false; back.onclick=showHome;
+      content.innerHTML=`<p class="ra9mon-question">${l==='ar'?'لدينا هذه المقالات:':l==='en'?'Here are the available articles:':'Voici les articles disponibles :'}</p><div class="ra9mon-result-list">${articles.slice(0,30).map(a=>`<a href="articles.html#article-${encodeURIComponent(a.id)}"><b>${esc(a.title)}</b><small>${esc(a.category||'')}</small></a>`).join('')}</div>`;
+    };
+    const showRefs = type => {
+      back.hidden=false; back.onclick=showTypes;
+      const list=refs.filter(r=>String(r.type||'other')===type);
+      content.innerHTML=`<p class="ra9mon-question">${l==='ar'?'أوه نعم! لدينا عدة مراجع من هذا النوع. اختر المرجع:':l==='en'?'Oh yes! We have several references of this type. Choose one:':'Oh oui ! Nous avons plusieurs références de ce type. Choisissez-en une :'}</p><div class="ra9mon-result-list">${list.slice(0,40).map(r=>`<a href="library.html#ref-${encodeURIComponent(r.id)}"><b>${esc(r.title)}</b><small>${esc(r.category||'')} ${r.year?`· ${esc(r.year)}`:''}</small></a>`).join('')}</div>`;
+    };
+    content.addEventListener('click', e=>{ const k=e.target.closest('[data-explore-kind]'); const rt=e.target.closest('[data-ref-type]'); if(k){k.dataset.exploreKind==='refs'?showTypes():showArticles();} if(rt) showRefs(rt.dataset.refType); });
+    showHome();
   }
 
   function updateRobotText() {
@@ -213,8 +260,8 @@
     root.querySelector('.ra9mon-name').textContent = t('botName');
     root.querySelector('.ra9mon-greeting').textContent = t('botGreeting');
     root.querySelector('.ra9mon-intro').textContent = t('botIntro');
-    root.querySelector('.ra9mon-library').textContent = t('botLibrary');
-    root.querySelector('.ra9mon-articles').textContent = t('botArticles');
+    const explore = root.querySelector('.ra9mon-explore');
+    if (explore) explore.textContent = t('botExplore');
     root.querySelector('.ra9mon-install').textContent = t('botInstall');
     root.querySelector('.ra9mon-hint').textContent = t('botHint');
     root.querySelector('.ra9mon-close').setAttribute('aria-label', t('botClose'));

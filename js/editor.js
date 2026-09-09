@@ -305,12 +305,95 @@
   async function printDocument(){
     preparePrint();
     hideSelectionToolbar();
+
+    const libsReady = !!(window.html2canvas && window.jspdf && window.jspdf.jsPDF);
+    if(!libsReady){
+      toast(lang()==='ar'?'تعذر تحميل محرك PDF. سيتم فتح الطباعة العادية.':'PDF engine unavailable. Opening standard print.');
+      requestAnimationFrame(()=>setTimeout(()=>window.print(),80));
+      return;
+    }
+
+    // Open a window synchronously from the user's click so mobile browsers
+    // do not block the PDF viewer after the asynchronous rendering finishes.
+    let viewer=null;
+    try{ viewer=window.open('about:blank','_blank'); }catch(e){}
+    if(viewer){
+      try{
+        viewer.document.title='RA9MANA DZ — PDF';
+        viewer.document.body.innerHTML='<div style="font-family:Arial,sans-serif;padding:32px;text-align:center">Génération du PDF…</div>';
+      }catch(e){}
+    }
+
+    const pages = $$('.page');
+    if(!pages.length){
+      if(viewer) try{viewer.close()}catch(e){}
+      toast('Aucune page à exporter');
+      return;
+    }
+
+    const sandbox=document.createElement('div');
+    sandbox.setAttribute('aria-hidden','true');
+    sandbox.style.cssText='position:fixed;left:-100000px;top:0;width:210mm;background:#fff;z-index:-1;pointer-events:none;';
+    document.body.appendChild(sandbox);
+
+    const {jsPDF}=window.jspdf;
+    const pdf=new jsPDF({orientation:'p',unit:'mm',format:'a4',compress:true});
+
     try{
       if(document.fonts&&document.fonts.ready) await document.fonts.ready;
-    }catch(e){}
-    // Print the current document directly. This avoids the mobile-browser
-    // popup -> generated file -> PDF download flow that can fail on phones.
-    requestAnimationFrame(()=>setTimeout(()=>window.print(),80));
+
+      for(let i=0;i<pages.length;i++){
+        const source=pages[i];
+        const clone=source.cloneNode(true);
+        clone.querySelectorAll('.page-actions,.footnote-delete').forEach(el=>el.remove());
+        clone.classList.remove('bibliography-page');
+        clone.style.cssText += ';width:210mm;height:297mm;min-height:297mm;margin:0!important;box-shadow:none!important;border-radius:0!important;transform:none!important;overflow:hidden!important;background:#fff!important;';
+        clone.querySelectorAll('*').forEach(el=>{
+          el.style.animation='none';
+          el.style.transition='none';
+        });
+        sandbox.innerHTML='';
+        sandbox.appendChild(clone);
+
+        // Give the browser a frame to resolve fonts/layout before capture.
+        await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+        const canvas=await window.html2canvas(clone,{
+          scale:Math.min(2,Math.max(1,window.devicePixelRatio||1)),
+          useCORS:true,
+          allowTaint:false,
+          backgroundColor:'#ffffff',
+          logging:false,
+          width:clone.scrollWidth,
+          height:clone.scrollHeight,
+          windowWidth:clone.scrollWidth,
+          windowHeight:clone.scrollHeight
+        });
+        const image=canvas.toDataURL('image/jpeg',0.94);
+        if(i>0) pdf.addPage();
+        pdf.addImage(image,'JPEG',0,0,210,297,undefined,'FAST');
+      }
+
+      const blob=pdf.output('blob');
+      const url=URL.createObjectURL(blob);
+      if(viewer && !viewer.closed){
+        try{
+          viewer.location.href=url;
+          setTimeout(()=>URL.revokeObjectURL(url),10*60*1000);
+        }catch(e){
+          if(viewer) try{viewer.close()}catch(_){}
+          download(blob,(project.title||'RA9MANA-document')+'.pdf');
+        }
+      }else{
+        download(blob,(project.title||'RA9MANA-document')+'.pdf');
+        toast(lang()==='ar'?'تم إنشاء PDF وتحميله':'PDF created and downloaded');
+      }
+    }catch(err){
+      console.error('RA9MANA PDF export failed',err);
+      if(viewer) try{viewer.close()}catch(e){}
+      toast(lang()==='ar'?'تعذر إنشاء PDF. حاول مرة أخرى.':'Unable to create PDF. Please try again.');
+    }finally{
+      sandbox.remove();
+    }
   }
   function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
   async function copyText(text){

@@ -133,7 +133,7 @@
   function rememberSelection(){const s=window.getSelection();if(!s||!s.rangeCount)return;const range=s.getRangeAt(0);const node=range.commonAncestorContainer;const content=node.nodeType===3?node.parentElement:node;const pageContent=content?.closest?.('.page-content[contenteditable="true"]');if(pageContent)savedRange=range.cloneRange()}
   function restoreSelection(){if(!savedRange)return false;const container=savedRange.commonAncestorContainer;const content=(container.nodeType===3?savedRange.commonAncestorContainer.parentElement:container)?.closest?.('.page-content[contenteditable="true"]');if(!content)return false;const s=window.getSelection();s.removeAllRanges();s.addRange(savedRange);return true}
   function currentPageObject(){return project.pages[currentPage]||project.pages[0]}
-  function applyTextStyle(prop,value,commandValue){rememberSelection();if(!restoreSelection()){toast(lang()==='ar'?'حدد النص أولًا':'Select text first');return;}document.execCommand(prop,false,commandValue??value);const p=currentPageObject();if(p){p.style=p.style||{};if(prop==='fontName')p.style.fontFamily=value;if(prop==='fontSize')p.style.fontSize=Number(value)||17;if(prop==='foreColor')p.style.color=value;}capture();renderSelectionPreservingCaret();}
+  function applyTextStyle(prop,value,commandValue){if(!restoreSelection()){rememberSelection();}if(!restoreSelection()){toast(lang()==='ar'?'حدد النص أولًا':'Select text first');return;}document.execCommand(prop,false,commandValue??value);const p=currentPageObject();if(p){p.style=p.style||{};if(prop==='fontName')p.style.fontFamily=value;if(prop==='fontSize')p.style.fontSize=Number(value)||17;if(prop==='foreColor')p.style.color=value;}capture();renderSelectionPreservingCaret();}
   function renderSelectionPreservingCaret(){try{if(savedRange){const s=window.getSelection();s.removeAllRanges();s.addRange(savedRange)}}catch(e){}}
   function pageBorderModal(){const p=currentPageObject();const st=p.style||{};const gap=Math.max(1,Math.min(3,Number(st.borderTextGap)||2));openModal(`<h2 class="modal-title">▣ ${lang()==='ar'?'إطار الصفحة':'Page border'}</h2><p class="modal-sub">${lang()==='ar'?'الإطار سيكون داخل الصفحة مثل Word، مع مسافة مستقلة بين الإطار والنص.':'The border is inset from the page edge, like Word, with a separate text-to-border spacing.'}</p><form id="page-border-form" class="manual-form"><label>النمط<select name="style"><option value="none">بدون إطار</option><option value="solid">متصل</option><option value="double">مزدوج</option><option value="dashed">متقطع</option><option value="dotted">منقط</option></select></label><label>السماكة (px)<input name="width" type="number" min="1" max="8" value="${st.borderWidth||1}"></label><label>اللون<input name="color" type="color" value="${st.borderColor||'#cbd5e1'}"></label><label>التباعد بين النص والإطار<select name="gap"><option value="1">قريب — مستوى 1</option><option value="2">متوسط — مستوى 2</option><option value="3">واسع — مستوى 3</option></select></label><div class="page-border-preview"><b>معاينة المسافة</b><div class="border-gap-demo" data-gap-demo></div><small>المستوى 1 = أقرب للنص، المستوى 3 = مسافة أكبر.</small></div><div class="form-actions"><button type="button" class="btn btn-ghost" data-close-editor-modal>إلغاء</button><button class="btn btn-primary">تطبيق</button></div></form>`);const f=$('#page-border-form');f.elements.style.value=st.borderStyle||'none';f.elements.gap.value=String(gap);f.onsubmit=e=>{e.preventDefault();p.style=p.style||{};p.style.borderStyle=f.elements.style.value;p.style.borderWidth=Number(f.elements.width.value)||1;p.style.borderColor=f.elements.color.value;p.style.borderInset=10;p.style.borderTextGap=Math.max(1,Math.min(3,Number(f.elements.gap.value)||2));render();persist();closeModal();toast('تم تطبيق إطار الصفحة والتباعد')};}
   function exec(cmd,val=null){restoreSelection();if(cmd==='createLink'){const url=prompt('URL');if(url)document.execCommand(cmd,false,url)}else document.execCommand(cmd,false,val);capture()}
@@ -365,14 +365,15 @@
       <button type="button" id="float-color" title="لون النص">A</button>
       <input id="float-color-picker" type="color" value="#1e293b" title="لون النص" aria-label="لون النص">
       <span class="float-sep"></span>
-      <button type="button" data-float-cmd="justifyRight" title="محاذاة لليمين">≡</button>
+      <button type="button" data-float-cmd="justifyRight" title="محاذاة لليمين">⇥</button>
       <button type="button" data-float-cmd="justifyCenter" title="توسيط">≡</button>
-      <button type="button" data-float-cmd="justifyLeft" title="محاذاة لليسار">≡</button>
+      <button type="button" data-float-cmd="justifyLeft" title="محاذاة لليسار">⇤</button>
       <span class="float-sep"></span>
       <button type="button" id="float-footnote" title="إضافة تهميش">¹</button>
     `;
     document.body.appendChild(selectionToolbar);
-    selectionToolbar.addEventListener('mousedown',e=>e.preventDefault());
+    selectionToolbar.addEventListener('pointerdown',e=>{rememberSelection();e.preventDefault();});
+    selectionToolbar.addEventListener('mousedown',e=>{rememberSelection();e.preventDefault();});
     selectionToolbar.addEventListener('click',e=>{
       const b=e.target.closest('[data-float-cmd]');
       if(b){e.preventDefault();exec(b.dataset.floatCmd);positionSelectionToolbar();return;}

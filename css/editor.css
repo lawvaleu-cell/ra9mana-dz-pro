@@ -109,34 +109,39 @@
 .page-number-field{display:grid;gap:6px;margin:12px 0;font-size:12px;font-weight:700;color:#475569}
 .page-number-field input{width:100%;box-sizing:border-box;border:1px solid #dbe4ea;border-radius:10px;padding:10px;font:inherit;background:#fff}
 @media(max-width:560px){
-  /* Main editor toolbar: use the full width in wrapped rows, never a horizontal scroller. */
+  /* Mobile editor toolbar: fixed-width grid, no horizontal scrolling at all. */
   .editor-toolbar{
     overflow:visible!important;
-    flex-wrap:wrap!important;
+    display:grid!important;
+    grid-template-columns:repeat(4,minmax(0,1fr));
     gap:6px!important;
     padding:8px!important;
-    align-items:center;
+    align-items:stretch;
   }
   .editor-toolbar select,
   .editor-toolbar input,
   .editor-toolbar button{
-    min-height:38px!important;
+    width:100%!important;
+    min-width:0!important;
+    min-height:40px!important;
     box-sizing:border-box;
+    margin:0!important;
   }
-  .editor-toolbar #block-style{flex:1 1 92px;min-width:82px}
-  .editor-toolbar #font-family{flex:1 1 145px;min-width:125px}
-  .editor-toolbar #font-size{flex:0 0 58px;width:58px!important}
+  .editor-toolbar #block-style{grid-column:span 2}
+  .editor-toolbar #font-family{grid-column:span 2}
+  .editor-toolbar #font-size{grid-column:span 1;width:100%!important}
   .editor-toolbar .font-size-unit{display:none}
-  .editor-toolbar .color-palette{flex:1 1 auto;flex-wrap:wrap;gap:5px}
-  .editor-toolbar .color-palette button{width:26px!important;min-width:26px!important;height:26px!important;min-height:26px!important}
+  .editor-toolbar #text-color{grid-column:span 1}
+  .editor-toolbar .color-palette{grid-column:span 2;display:flex!important;flex-wrap:nowrap!important;gap:4px!important;justify-content:space-between}
+  .editor-toolbar .color-palette button{width:27px!important;min-width:27px!important;height:27px!important;min-height:27px!important;flex:0 0 27px}
   .editor-toolbar .toolbar-sep{display:none}
-  .editor-toolbar button{padding:0 9px!important}
-  .editor-toolbar .special-tool{flex:1 1 120px}
-  #editor-selection-toolbar{left:8px!important;right:8px!important;width:auto;justify-content:center;top:auto!important;bottom:10px;transform:translateY(8px);flex-wrap:wrap}
+  .editor-toolbar .special-tool{grid-column:span 2}
+  .editor-toolbar .special-tool,#page-border,#add-page{padding:0 5px!important}
+  #editor-selection-toolbar{left:8px!important;right:8px!important;width:auto;display:grid!important;grid-template-columns:repeat(6,minmax(0,1fr));justify-content:stretch;top:auto!important;bottom:10px;transform:translateY(8px);padding:7px!important}
   #editor-selection-toolbar.is-visible{transform:translateY(0)}
-  #editor-selection-toolbar select{max-width:92px;height:36px!important}
-  #editor-selection-toolbar input[type="number"]{width:48px;height:36px!important}
-  #editor-selection-toolbar input[type="color"]{width:34px!important;height:34px!important}
-  #editor-selection-toolbar button{width:38px!important;min-width:38px!important;height:38px!important}
-  #editor-selection-toolbar .float-sep{height:25px}
+  #editor-selection-toolbar select{max-width:none;width:100%!important;height:38px!important;grid-column:span 2}
+  #editor-selection-toolbar input[type="number"]{width:100%!important;height:38px!important;grid-column:span 1}
+  #editor-selection-toolbar input[type="color"]{width:100%!important;height:38px!important;grid-column:span 1}
+  #editor-selection-toolbar button{width:100%!important;min-width:0!important;height:38px!important}
+  #editor-selection-toolbar .float-sep{display:none}
 }

@@ -1,9 +1,10 @@
-const VERSION = 'ra9mana-pwa-v8';
+const VERSION = 'ra9mana-pwa-v9';
 const SHELL = `${VERSION}-shell`;
 const RUNTIME = `${VERSION}-runtime`;
 const DATA = `${VERSION}-data`;
 
 const APP_SHELL = [
+  './print.html',
   './editor.html',
   './css/editor.css',
   './js/editor.js',

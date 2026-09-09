@@ -148,9 +148,23 @@
     persist()
   }
   async function loadLibrary(){try{const r=await fetch('data/library.json',{cache:'no-store'});library=await r.json();if(!Array.isArray(library))library=[]}catch{library=[]}}
-  function openModal(html){$('#modal-content').innerHTML=html;$('#editor-modal').classList.add('is-open');$('#editor-modal').setAttribute('aria-hidden','false')}
+  function openModal(html){hideSelectionToolbar();$('#modal-content').innerHTML=html;$('#editor-modal').classList.add('is-open');$('#editor-modal').setAttribute('aria-hidden','false')}
   function closeModal(){$('#editor-modal').classList.remove('is-open');$('#editor-modal').setAttribute('aria-hidden','true')}
-  function refText(ref,kind='full',pageNo=null){if(window.RA9MANA_CITATION){try{return window.RA9MANA_CITATION[kind](ref,lang())+(pageNo?`, p. ${pageNo}`:'')}catch{}}let author=ref.author&&ref.author!=='/'?ref.author:'';return [author,ref.title,ref.source,ref.year].filter(Boolean).join(', ')+(pageNo?`, p. ${pageNo}`:'')}
+  function refText(ref,kind='full',pageNo=null){
+    let text='';
+    if(window.RA9MANA_CITATION){
+      try{
+        if(kind==='footnote' && typeof window.RA9MANA_CITATION.footnote==='function') text=window.RA9MANA_CITATION.footnote(ref,lang(),pageNo);
+        else if(typeof window.RA9MANA_CITATION[kind]==='function') text=window.RA9MANA_CITATION[kind](ref,lang());
+      }catch{}
+    }
+    if(!text){
+      const author=ref.author&&ref.author!=='/'?ref.author:'';
+      text=[author,ref.title,ref.source,ref.year].filter(Boolean).join(', ');
+      if(kind==='footnote' && pageNo) text=String(text).replace(/[.]+$/,'')+(lang()==='ar'?`، ص. ${pageNo}.`:` , p. ${pageNo}.`);
+    }
+    return text;
+  }
   function addMarker(page,number,noteId){
     const content=page?.querySelector('.page-content[contenteditable="true"]');if(!content||!restoreSelection())return null;
     const r=savedRange.cloneRange();r.collapse(false);const marker=document.createElement('sup');marker.className='reference-marker';marker.textContent=String(number);marker.dataset.footnote=String(number);marker.dataset.footnoteId=noteId||'';marker.title='Footnote '+number;marker.setAttribute('aria-label','Footnote '+number);r.insertNode(marker);
@@ -158,24 +172,27 @@
   }
   function addFootnote(ref,text){
     const pageIndex=currentPage;const page=$$('.page')[pageIndex];if(!page||page.dataset.bibliography==='true')return;
-    const notes=JSON.parse(page.dataset.footnotes||'[]');const note={id:uid('note'),refId:ref?.id||null,ref:ref||null,text:text||refText(ref,'full')};
-    const marker=addMarker(page,notes.length+1,note.id);if(!marker){toast('ضع المؤشر داخل النص أولًا');return;}
+    const notes=JSON.parse(page.dataset.footnotes||'[]');const note={id:uid('note'),refId:ref?.id||null,ref:ref||null,text:text||refText(ref,'full'),citationKind:text&&text===refText(ref,'short')?'short':'full'};
+    if(ref){project.usedReferences=Array.isArray(project.usedReferences)?project.usedReferences:[];const key=ref.id||JSON.stringify(ref);if(!project.usedReferences.some(r=>(r.id||JSON.stringify(r))===key))project.usedReferences.push(ref)}const marker=addMarker(page,notes.length+1,note.id);if(!marker){toast('ضع المؤشر داخل النص أولًا');return;}
     const markers=[...page.querySelectorAll('.reference-marker')];const insertIndex=markers.indexOf(marker);const safeIndex=insertIndex<0?notes.length:Math.min(insertIndex,notes.length);notes.splice(safeIndex,0,note);
     project.pages[pageIndex].footnotes=notes;const hadBib=hasBibliographyPage();ensureBibliographyPage();renumberPage(page,notes);capture();if(!hadBib){render();currentPage=pageIndex;}closeModal();toast('تمت إضافة التهميش رقم '+(safeIndex+1)+' إلى الصفحة '+(pageIndex+1));
   }
-  function picker(){const l=LANGS[lang()];openModal(`<h2 class="modal-title">📚 ${lang()==='ar'?'إضافة مرجع من مكتبة RA9MANA':'Add a reference from RA9MANA Library'}</h2><p class="modal-sub">${l.search}</p><input class="library-picker-search" id="ref-search" placeholder="${l.search}"><div class="picker-filters" id="ref-filters"></div><div class="picker-list" id="ref-list"></div><div style="margin-top:15px"><button class="btn btn-ghost" id="manual-ref">✍️ ${l.manual}</button></div>`);let type='all';const types=[...new Set(library.map(r=>r.type).filter(Boolean))];$('#ref-filters').innerHTML=`<button class="picker-chip active" data-type="all">All</button>`+types.map(t=>`<button class="picker-chip" data-type="${escapeHtml(t)}">${escapeHtml(t)}</button>`).join('');const draw=()=>{const q=($('#ref-search').value||'').toLowerCase();const arr=library.filter(r=>(type==='all'||r.type===type)&&[r.title,r.author,r.category,r.description,r.source].join(' ').toLowerCase().includes(q)).slice(0,60);$('#ref-list').innerHTML=arr.length?arr.map(r=>`<div class="picker-item"><div><h4>${escapeHtml(r.title||'—')}</h4><p>${escapeHtml([r.author&&r.author!=='/'?r.author:'',r.year,r.category].filter(Boolean).join(' · '))}</p></div><div class="picker-actions"><button data-use-ref="${escapeHtml(r.id)}">${l.add}</button><button class="secondary" data-foot-ref="${escapeHtml(r.id)}">¹</button></div></div>`).join(''):`<div class="ramon-box">${lang()==='ar'?'لم نجد هذا المرجع. يمكنك إدخاله يدويًا.':'No matching reference. You can enter it manually.'}</div>`;$$('[data-use-ref]').forEach(b=>b.onclick=()=>insertReference(library.find(r=>r.id===b.dataset.useRef)));$$('[data-foot-ref]').forEach(b=>b.onclick=()=>chooseFootnote(library.find(r=>r.id===b.dataset.footRef))) };$('#ref-search').oninput=draw;$$('[data-type]').forEach(b=>b.onclick=()=>{type=b.dataset.type;$$('[data-type]').forEach(x=>x.classList.remove('active'));b.classList.add('active');draw()});$('#manual-ref').onclick=manualForm;draw()}
-  function chooseFootnote(ref){if(!ref)return;const previous=project.pages.flatMap(p=>p.footnotes||[]).find(n=>n.refId===ref.id);const options=previous?`<button class="btn btn-primary" id="use-full">${LANGS[lang()].full}</button><button class="btn btn-ghost" id="use-short">${LANGS[lang()].short}</button>`:`<button class="btn btn-primary" id="use-full">${LANGS[lang()].full}</button>`;openModal(`<h2 class="modal-title">¹ ${lang()==='ar'?'إضافة تهميش':'Add footnote'}</h2><p class="modal-sub">${escapeHtml(ref.title)}</p><div class="ramon-box"><p>${escapeHtml(refText(ref,'full'))}</p><div class="form-actions">${options}</div></div>`);$('#use-full').onclick=()=>addFootnote(ref,refText(ref,'full'));$('#use-short')?.addEventListener('click',()=>addFootnote(ref,refText(ref,'short')))}
+  function picker(){const l=LANGS[lang()];openModal(`<h2 class="modal-title">📚 ${lang()==='ar'?'إضافة مرجع من مكتبة RA9MANA':'Add a reference from RA9MANA Library'}</h2><p class="modal-sub">${l.search}</p><input class="library-picker-search" id="ref-search" placeholder="${l.search}"><div class="picker-filters" id="ref-filters"></div><div class="picker-list" id="ref-list"></div><div style="margin-top:15px"><button class="btn btn-ghost" id="manual-ref">✍️ ${l.manual}</button></div>`);let type='all';const types=[...new Set(library.map(r=>r.type).filter(Boolean))];$('#ref-filters').innerHTML=`<button class="picker-chip active" data-type="all">All</button>`+types.map(t=>`<button class="picker-chip" data-type="${escapeHtml(t)}">${escapeHtml(t)}</button>`).join('');const draw=()=>{const q=($('#ref-search').value||'').toLowerCase();const arr=library.filter(r=>(type==='all'||r.type===type)&&[r.title,r.author,r.category,r.description,r.source].join(' ').toLowerCase().includes(q)).slice(0,60);$('#ref-list').innerHTML=arr.length?arr.map(r=>`<div class="picker-item"><div><h4>${escapeHtml(r.title||'—')}</h4><p>${escapeHtml([r.author&&r.author!=='/'?r.author:'',r.year,r.category].filter(Boolean).join(' · '))}</p></div><div class="picker-actions"><button data-use-ref="${escapeHtml(r.id)}">📚 إضافة للمراجع</button><button class="secondary" data-foot-ref="${escapeHtml(r.id)}">¹ تهميش</button></div></div>`).join(''):`<div class="ramon-box">${lang()==='ar'?'لم نجد هذا المرجع. يمكنك إدخاله يدويًا.':'No matching reference. You can enter it manually.'}</div>`;$$('[data-use-ref]').forEach(b=>b.onclick=()=>insertReference(library.find(r=>r.id===b.dataset.useRef)));$$('[data-foot-ref]').forEach(b=>b.onclick=()=>chooseFootnote(library.find(r=>r.id===b.dataset.footRef))) };$('#ref-search').oninput=draw;$$('[data-type]').forEach(b=>b.onclick=()=>{type=b.dataset.type;$$('[data-type]').forEach(x=>x.classList.remove('active'));b.classList.add('active');draw()});$('#manual-ref').onclick=manualForm;draw()}
+  function chooseFootnote(ref){if(!ref)return;const previous=project.pages.flatMap(p=>p.footnotes||[]).find(n=>n.refId===ref.id);const options=previous?`<button class="btn btn-primary" id="use-full">${LANGS[lang()].full}</button><button class="btn btn-ghost" id="use-short">${LANGS[lang()].short}</button>`:`<button class="btn btn-primary" id="use-full">${LANGS[lang()].full}</button>`;openModal(`<h2 class="modal-title">¹ ${lang()==='ar'?'إضافة تهميش من المكتبة':'Add library footnote'}</h2><p class="modal-sub">${escapeHtml(ref.title)}</p><div class="library-citation-preview"><span>${lang()==='ar'?'النص الذي سيضاف إلى التهميش':'Citation that will be inserted into the footnote'}</span><div class="citation-preview-text">${escapeHtml(refText(ref,'full'))}</div></div><label class="page-number-field">${lang()==='ar'?'رقم الصفحة (اختياري)':'Page number (optional)'}<input id="footnote-page" type="text" inputmode="numeric" placeholder="${lang()==='ar'?'مثال: 25':'e.g. 25'}"></label><div class="form-actions">${options}</div></div>`);const pageInput=$('#footnote-page');const makeText=kind=>{const pageNo=(pageInput?.value||'').trim();return refText(ref,'footnote',pageNo)};$('#use-full').onclick=()=>addFootnote(ref,makeText('full'));$('#use-short')?.addEventListener('click',()=>addFootnote(ref,makeText('short')))}
   function manualForm(){openModal(`<h2 class="modal-title">✍️ ${LANGS[lang()].manual}</h2><p class="modal-sub">أدخل بيانات المرجع مرة واحدة وسيتم استخدامه في هذا المشروع.</p><form class="manual-form" id="manual-reference-form"><label>المؤلف<input name="author"></label><label>العنوان<input name="title" required></label><label>النوع<select name="type"><option value="book">كتاب</option><option value="law">قانون</option><option value="article">مقال</option><option value="thesis">مذكرة/أطروحة</option><option value="other">أخرى</option></select></label><label>المصدر / الناشر<input name="source"></label><label>السنة<input name="year"></label><label>الصفحة<input name="page"></label><div class="form-actions"><button type="button" class="btn btn-ghost" data-close-editor-modal>إلغاء</button><button class="btn btn-primary">إضافة التهميش</button></div></form>`);$('#manual-reference-form').onsubmit=e=>{e.preventDefault();const d=new FormData(e.target);const r={id:uid('manual'),author:d.get('author'),title:d.get('title'),type:d.get('type'),source:d.get('source'),year:d.get('year')};addFootnote(r,[d.get('author'),d.get('title'),d.get('source'),d.get('year'),d.get('page')?`ص. ${d.get('page')}`:''].filter(Boolean).join(', '))}}
   function insertReference(ref){
     if(!ref)return;
-    const hadBib=hasBibliographyPage();
-    if(!restoreSelection()){toast('ضع المؤشر داخل النص أولًا');return;}
-    document.execCommand('insertText',false,ref.title||'Référence');
+    capture();
     project.usedReferences=Array.isArray(project.usedReferences)?project.usedReferences:[];
-    const key=ref.id||JSON.stringify(ref);if(!project.usedReferences.some(r=>(r.id||JSON.stringify(r))===key))project.usedReferences.push(ref);
-    ensureBibliographyPage();capture();
-    if(!hadBib){render();currentPage=Math.min(currentPage,project.pages.length-2);persist();}
-    closeModal();toast('تمت إضافة المرجع');
+    const key=ref.id||JSON.stringify(ref);
+    if(!project.usedReferences.some(r=>(r.id||JSON.stringify(r))===key)) project.usedReferences.push(ref);
+    ensureBibliographyPage();
+    updateBibliographyPage();
+    const bibEl=$('.bibliography-page');
+    if(bibEl)renderBibliographyPageElement(bibEl);
+    persist();
+    closeModal();
+    toast('تمت إضافة المرجع إلى قائمة المراجع دون إدراج وصفه داخل النص');
   }
   function updateBibliographyPage(){
     const bibIndex=project.pages.findIndex(p=>p.isBibliography===true);if(bibIndex<0)return;
@@ -285,15 +302,15 @@
     capture();
     return project;
   }
-  function printDocument(){
-    const current=preparePrint();
-    const url='print.html?project='+encodeURIComponent(current.id);
-    const win=window.open(url,'RA9MANA_PRINT','width=1100,height=900');
-    if(!win){
-      toast(lang()==='ar'?'يرجى السماح بالنوافذ المنبثقة للطباعة':'Please allow pop-ups to print');
-      return;
-    }
-    try{win.focus();}catch(e){}
+  async function printDocument(){
+    preparePrint();
+    hideSelectionToolbar();
+    try{
+      if(document.fonts&&document.fonts.ready) await document.fonts.ready;
+    }catch(e){}
+    // Print the current document directly. This avoids the mobile-browser
+    // popup -> generated file -> PDF download flow that can fail on phones.
+    requestAnimationFrame(()=>setTimeout(()=>window.print(),80));
   }
   function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
   async function copyText(text){
@@ -332,11 +349,86 @@
       window.addEventListener('scroll',update,{passive:true});
     }
   }
+  let selectionToolbar=null;
+  let selectionHideTimer=null;
+  function ensureSelectionToolbar(){
+    if(selectionToolbar)return selectionToolbar;
+    selectionToolbar=document.createElement('div');
+    selectionToolbar.id='editor-selection-toolbar';
+    selectionToolbar.setAttribute('role','toolbar');
+    selectionToolbar.innerHTML=`
+      <select id="float-font" title="الخط"><option value="">خط</option><option>Amiri</option><option>Arial</option><option>Calibri</option><option>Cambria</option><option>Garamond</option><option>Georgia</option><option>Times New Roman</option></select>
+      <input id="float-size" type="number" min="8" max="72" value="17" title="حجم الخط" aria-label="حجم الخط">
+      <button type="button" data-float-cmd="bold" title="عريض"><b>B</b></button>
+      <button type="button" data-float-cmd="italic" title="مائل"><i>I</i></button>
+      <button type="button" data-float-cmd="underline" title="تحته خط"><u>U</u></button>
+      <button type="button" id="float-color" title="لون النص">A</button>
+      <input id="float-color-picker" type="color" value="#1e293b" title="لون النص" aria-label="لون النص">
+      <span class="float-sep"></span>
+      <button type="button" data-float-cmd="justifyRight" title="محاذاة لليمين">≡</button>
+      <button type="button" data-float-cmd="justifyCenter" title="توسيط">≡</button>
+      <button type="button" data-float-cmd="justifyLeft" title="محاذاة لليسار">≡</button>
+      <span class="float-sep"></span>
+      <button type="button" id="float-footnote" title="إضافة تهميش">¹</button>
+    `;
+    document.body.appendChild(selectionToolbar);
+    selectionToolbar.addEventListener('mousedown',e=>e.preventDefault());
+    selectionToolbar.addEventListener('click',e=>{
+      const b=e.target.closest('[data-float-cmd]');
+      if(b){e.preventDefault();exec(b.dataset.floatCmd);positionSelectionToolbar();return;}
+      if(e.target.closest('#float-footnote')){e.preventDefault();openFootnote();hideSelectionToolbar();}
+      if(e.target.closest('#float-color')){e.preventDefault();$('#float-color-picker')?.click();}
+    });
+    const ff=selectionToolbar.querySelector('#float-font');
+    if(ff)ff.addEventListener('change',e=>{applyTextStyle('fontName',e.target.value,e.target.value);positionSelectionToolbar()});
+    const fs=selectionToolbar.querySelector('#float-size');
+    if(fs)fs.addEventListener('change',e=>{const v=Math.max(8,Math.min(72,Number(e.target.value)||17));e.target.value=v;applyTextStyle('fontSize',v,Math.max(1,Math.min(7,Math.round(v/3))));positionSelectionToolbar()});
+    const fc=selectionToolbar.querySelector('#float-color-picker');
+    if(fc)fc.addEventListener('input',e=>{applyTextStyle('foreColor',e.target.value,e.target.value);positionSelectionToolbar()});
+    return selectionToolbar;
+  }
+  function selectionInsideEditor(){
+    const s=window.getSelection();
+    if(!s||!s.rangeCount||s.isCollapsed)return false;
+    const node=s.anchorNode?.nodeType===3?s.anchorNode.parentElement:s.anchorNode;
+    return !!node?.closest?.('.page-content[contenteditable="true"]');
+  }
+  function positionSelectionToolbar(){
+    const bar=ensureSelectionToolbar();
+    const s=window.getSelection();
+    if(!selectionInsideEditor()){hideSelectionToolbar();return;}
+    rememberSelection();
+    const range=s.getRangeAt(0);
+    let rect=range.getBoundingClientRect();
+    if((!rect.width&&!rect.height)&&s.anchorNode?.parentElement)rect=s.anchorNode.parentElement.getBoundingClientRect();
+    const barRect=bar.getBoundingClientRect();
+    const gap=8;
+    let left=rect.left+rect.width/2-barRect.width/2;
+    left=Math.max(8,Math.min(left,window.innerWidth-barRect.width-8));
+    let top=rect.top-barRect.height-gap;
+    if(top<8)top=rect.bottom+gap;
+    bar.style.left=`${Math.round(left)}px`;
+    bar.style.top=`${Math.round(top)}px`;
+    bar.classList.add('is-visible');
+  }
+  function hideSelectionToolbar(){
+    if(selectionToolbar)selectionToolbar.classList.remove('is-visible');
+  }
+  function scheduleSelectionToolbar(){
+    clearTimeout(selectionHideTimer);
+    selectionHideTimer=setTimeout(()=>{
+      if(selectionInsideEditor())positionSelectionToolbar();else hideSelectionToolbar();
+    },40);
+  }
   function init(){
     syncStickyToolbarOffset();
     loadLibrary();
     render();
+    ensureSelectionToolbar();
     refreshEditorLanguage();
+    document.addEventListener('selectionchange',scheduleSelectionToolbar);
+    window.addEventListener('scroll',()=>{if(selectionToolbar?.classList.contains('is-visible'))positionSelectionToolbar()},{passive:true});
+    window.addEventListener('resize',()=>{if(selectionToolbar?.classList.contains('is-visible'))positionSelectionToolbar()},{passive:true});
     document.addEventListener('ra9mana:langchange',refreshEditorLanguage);
 
     const title=$('#project-title');

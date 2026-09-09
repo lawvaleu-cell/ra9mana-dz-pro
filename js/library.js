@@ -217,7 +217,7 @@
 
   function citationBlock(ref, lang) {
     const c = RA9MANA_CITATION;
-    const full = c.full(ref, lang);
+    const full = typeof c.footnote === "function" ? c.footnote(ref, lang) : c.full(ref, lang);
     const short = c.short(ref, lang);
     const bib = c.bibliography(ref, lang);
     const labels = lang === "ar"
